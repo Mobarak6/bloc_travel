@@ -11,6 +11,30 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsFontsGen {
+  const $AssetsFontsGen();
+
+  /// File path: assets/fonts/Roboto-Black.ttf
+  String get robotoBlack => 'assets/fonts/Roboto-Black.ttf';
+
+  /// File path: assets/fonts/Roboto-Bold.ttf
+  String get robotoBold => 'assets/fonts/Roboto-Bold.ttf';
+
+  /// File path: assets/fonts/Roboto-Medium.ttf
+  String get robotoMedium => 'assets/fonts/Roboto-Medium.ttf';
+
+  /// File path: assets/fonts/Roboto-Regular.ttf
+  String get robotoRegular => 'assets/fonts/Roboto-Regular.ttf';
+
+  /// List of all assets
+  List<String> get values => [
+    robotoBlack,
+    robotoBold,
+    robotoMedium,
+    robotoRegular,
+  ];
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -18,13 +42,18 @@ class $AssetsImagesGen {
   AssetGenImage get profilePlaceHolder =>
       const AssetGenImage('assets/images/profile_place_holder.png');
 
+  /// File path: assets/images/splash_image.png
+  AssetGenImage get splashImage =>
+      const AssetGenImage('assets/images/splash_image.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [profilePlaceHolder];
+  List<AssetGenImage> get values => [profilePlaceHolder, splashImage];
 }
 
 class Assets {
   const Assets._();
 
+  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 

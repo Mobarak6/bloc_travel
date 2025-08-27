@@ -32,6 +32,8 @@ dependencies:
 
 
 
+  injectable: any
+  rxdart: any
 dev_dependencies:
   bloc_test: ^10.0.0
   flutter_test:

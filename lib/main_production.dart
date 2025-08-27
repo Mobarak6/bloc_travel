@@ -1,6 +1,6 @@
-import 'package:travel_app/app/app.dart';
 import 'package:travel_app/bootstrap.dart';
+import 'package:travel_app/src/travel_app.dart';
 
 void main() {
-  bootstrap(() => const App());
+  bootstrap(() => const TravelApp());
 }

@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'src/shared/network/api_client.dart';
+import 'package:travel_app/src/shared/network/api_client.dart';
 
 @module
 abstract class AppDependenciesModule {
