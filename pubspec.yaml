@@ -45,9 +45,34 @@ dev_dependencies:
   json_serializable: ^6.11.0
   injectable_generator: ^2.8.1
 
+
+flutter_gen:
+  output: lib/src/shared/assets/
+  line_length: 80
+  integrations:
+    flutter_svg: true
+
 flutter:
   generate: true
   uses-material-design: true
 
-assets:
-  - assets
+  assets:
+    - assets/
+    - assets/images/
+    - assets/fonts/
+
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+          weight: 400
+
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
+
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
+
+        - asset: assets/fonts/Roboto-Black.ttf
+          weight: 900
