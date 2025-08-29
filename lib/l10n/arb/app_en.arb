@@ -9,5 +9,25 @@
      "non_changeable": "Non Changeable",
      "login": "Login",
      "home": "Home",
-     "registration": "Registration"
- }
+     "registration": "Registration",
+     "welcome": "Welcome",
+     "signUpToAccessYourAccount": "Sign up to access your account",
+     "fullName": "Full Name",
+     "enterFullName": "Enter your full name",
+     "email": "Email",
+     "enterEmailAddress": "Enter your email address",
+     "password": "Password",
+     "enterPasswordMin8Characters": "Enter your password (min 8 characters)",
+     "confirmPassword": "Confirm Password",
+     "confirmYourPassword": "Confirm your password",
+     "signUp": "Sign Up",
+     "alreadyHaveAnAccount": "Already have an account?",
+     "loginHere": "Login here",
+     "pleaseEnterYourFullName": "Please enter your full name",
+     "pleaseEnterYourEmail": "Please enter your email",
+     "pleaseEnterAValidEmail": "Please enter a valid email",
+     "pleaseEnterAPassword": "Please enter a password",
+     "passwordMustBeAtLeast8Characters": "Password must be at least 8 characters",
+     "pleaseConfirmYourPassword": "Please confirm your password",
+     "passwordsDoNotMatch": "Passwords do not match"
+}

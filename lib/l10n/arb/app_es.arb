@@ -3,5 +3,31 @@
     "counterAppBarTitle": "Contador",
     "@counterAppBarTitle": {
         "description": "Texto mostrado en la AppBar de la página del contador"
-    }
+    },
+    "submit": "Enviar",
+    "increment": "Incrementar",
+    "non_changeable": "No Cambiable",
+    "login": "Iniciar Sesión",
+    "home": "Inicio",
+    "registration": "Registro",
+    "welcome": "Bienvenido",
+    "signUpToAccessYourAccount": "Regístrate para acceder a tu cuenta",
+    "fullName": "Nombre Completo",
+    "enterFullName": "Ingresa tu nombre completo",
+    "email": "Correo Electrónico",
+    "enterEmailAddress": "Ingresa tu dirección de correo",
+    "password": "Contraseña",
+    "enterPasswordMin8Characters": "Ingresa tu contraseña (mín 8 caracteres)",
+    "confirmPassword": "Confirmar Contraseña",
+    "confirmYourPassword": "Confirma tu contraseña",
+    "signUp": "Registrarse",
+    "alreadyHaveAnAccount": "¿Ya tienes una cuenta?",
+    "loginHere": "Inicia sesión aquí",
+    "pleaseEnterYourFullName": "Por favor ingresa tu nombre completo",
+    "pleaseEnterYourEmail": "Por favor ingresa tu correo electrónico",
+    "pleaseEnterAValidEmail": "Por favor ingresa un correo válido",
+    "pleaseEnterAPassword": "Por favor ingresa una contraseña",
+    "passwordMustBeAtLeast8Characters": "La contraseña debe tener al menos 8 caracteres",
+    "pleaseConfirmYourPassword": "Por favor confirma tu contraseña",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden"
 }
