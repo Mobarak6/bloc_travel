@@ -29,5 +29,10 @@
     "pleaseEnterAPassword": "Por favor ingresa una contraseña",
     "passwordMustBeAtLeast8Characters": "La contraseña debe tener al menos 8 caracteres",
     "pleaseConfirmYourPassword": "Por favor confirma tu contraseña",
-    "passwordsDoNotMatch": "Las contraseñas no coinciden"
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "userType": "Tipo de Usuario",
+    "selectUserType": "Selecciona tu tipo de usuario",
+    "user": "Usuario",
+    "admin": "Administrador",
+    "pleaseSelectUserType": "Por favor selecciona un tipo de usuario"
 }

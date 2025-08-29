@@ -1,0 +1,111 @@
+import 'package:flutter/material.dart';
+import 'package:travel_app/l10n/l10n.dart';
+import 'package:travel_app/src/shared/utils/dimensions.dart';
+import 'package:travel_app/src/shared/utils/styles.dart';
+import 'package:travel_app/src/shared/utils/user_type.dart';
+
+class UserTypeDropdownWidget extends StatelessWidget {
+  const UserTypeDropdownWidget({
+    required this.value,
+    required this.onChanged,
+    super.key,
+    this.validator,
+  });
+
+  final UserType? value;
+  final ValueChanged<UserType?> onChanged;
+  final String? Function(UserType?)? validator;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField<UserType>(
+      value: value,
+      onChanged: onChanged,
+      validator: validator,
+      decoration: InputDecoration(
+        labelText: context.l10n.userType,
+        hintText: context.l10n.selectUserType,
+        // prefixIcon: const Icon(Icons.person_outline),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+          borderSide: BorderSide(
+            color: Theme.of(context).hintColor.withValues(alpha: 0.3),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
+            width: 2,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.error,
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.error,
+            width: 2,
+          ),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: Dimensions.spacingMedium,
+          vertical: Dimensions.spacingSmall,
+        ),
+      ),
+      items: UserType.values.map((UserType userType) {
+        return DropdownMenuItem<UserType>(
+          value: userType,
+          child: Row(
+            children: [
+              Icon(
+                userType == UserType.admin
+                    ? Icons.admin_panel_settings
+                    : Icons.person,
+                color: Theme.of(context).primaryColor,
+                size: Dimensions.spacingDefault,
+              ),
+              const SizedBox(width: Dimensions.spacingSmall),
+              Text(
+                userType.label,
+                style: robotoMedium.copyWith(
+                  fontSize: Dimensions.fontSizeMedium,
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList(),
+      selectedItemBuilder: (BuildContext context) {
+        return UserType.values.map<Widget>((UserType userType) {
+          return Row(
+            children: [
+              Icon(
+                userType == UserType.admin
+                    ? Icons.admin_panel_settings
+                    : Icons.person,
+                color: Theme.of(context).primaryColor,
+                size: Dimensions.spacingDefault,
+              ),
+              const SizedBox(width: Dimensions.spacingSmall),
+              Text(
+                userType.label,
+                style: robotoMedium.copyWith(
+                  fontSize: Dimensions.fontSizeMedium,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
+          );
+        }).toList();
+      },
+    );
+  }
+}

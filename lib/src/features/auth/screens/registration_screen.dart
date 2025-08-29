@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_app/app_di.dart';
 import 'package:travel_app/l10n/l10n.dart';
 import 'package:travel_app/src/features/auth/managers/auth_bloc.dart';
+import 'package:travel_app/src/features/auth/widgets/user_type_dropdown_widget.dart';
 import 'package:travel_app/src/shared/extensions/overlay_extensions.dart';
 import 'package:travel_app/src/shared/utils/dimensions.dart';
 import 'package:travel_app/src/shared/utils/styles.dart';
 import 'package:travel_app/src/shared/utils/validate_check.dart';
 import 'package:travel_app/src/shared/widgets/custom_app_bar.dart';
 import 'package:travel_app/src/shared/widgets/custom_text_field_widget.dart';
+import 'package:travel_app/src/shared/utils/user_type.dart';
 import 'package:travel_app/src/travel_ap_router.gr.dart';
 
 @RoutePage()
@@ -157,6 +159,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     const SizedBox(height: Dimensions.spacingExtraLarge),
 
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        final selectedUserType =
+                            state.whenOrNull(selectedUserType
+                                : (userType) => userType) ?? UserType.user;
+
+                        return UserTypeDropdownWidget(
+                          value: selectedUserType,
+                          onChanged: (UserType? value) {
+                            if (value != null) {
+                              _authBloc.add(
+                                AuthEvent.selectUserType(userType: value),
+                              );
+                            }
+                          },
+                          validator: (value) {
+                            if (value == null) {
+                              return context.l10n.pleaseSelectUserType;
+                            }
+                            return null;
+                          },
+                        );
+                      },
+                    ),
+
+                    const SizedBox(height: Dimensions.spacingExtraLarge),
+
                     BlocConsumer<AuthBloc, AuthState>(
                       listener: (context, state) {
                         state.whenOrNull(
@@ -186,20 +215,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                             child: isLoading
                                 ? const SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
-                              ),
-                            )
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
                                 : Text(
-                              context.l10n.signUp,
-                              style: robotoMedium.copyWith(
-                                fontSize: Dimensions.fontSizeMedium,
-                                color: Colors.white,
-                              ),
-                            ),
+                                    context.l10n.signUp,
+                                    style: robotoMedium.copyWith(
+                                      fontSize: Dimensions.fontSizeMedium,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                           ),
                         );
                       },
@@ -235,9 +264,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                     ),
 
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.1,
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                   ],
                 ),
               ),
@@ -253,13 +280,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
 
-      _authBloc.add(
-        AuthEvent.signUp(
-          email: email,
-          password: password,
-          name: _nameController.text,
-        ),
-      );
+      final userType = _authBloc.state
+          .whenOrNull(selectedUserType: (userType) => userType)
+          ?? UserType.user;
+
+      _authBloc.add(AuthEvent.signUp(
+        email: email,
+        password: password,
+        name: _nameController.text,
+        userType: userType,
+      ));
     }
   }
 }

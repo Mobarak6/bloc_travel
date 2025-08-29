@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:travel_app/src/data/repositories/auth/auth_repository.dart';
 import 'package:travel_app/src/data/services/auth_service.dart';
 import 'package:travel_app/src/shared/utils/result.dart';
+import 'package:travel_app/src/shared/utils/user_type.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
@@ -30,10 +31,14 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
     required String name,
+    required UserType userType,
   }) async {
     try {
       await _authService.signUp(
-        email: email, password: password, name: name,
+        email: email,
+        password: password,
+        name: name,
+        userType: userType,
       );
 
       return Result.ok(true);
