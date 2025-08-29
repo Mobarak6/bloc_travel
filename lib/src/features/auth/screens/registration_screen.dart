@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_app/app_di.dart';
 import 'package:travel_app/l10n/l10n.dart';
+import 'package:travel_app/src/data/models/auth/user_role.dart';
 import 'package:travel_app/src/features/auth/managers/auth_bloc.dart';
 import 'package:travel_app/src/features/auth/widgets/user_type_dropdown_widget.dart';
 import 'package:travel_app/src/shared/extensions/overlay_extensions.dart';
@@ -11,7 +12,6 @@ import 'package:travel_app/src/shared/utils/styles.dart';
 import 'package:travel_app/src/shared/utils/validate_check.dart';
 import 'package:travel_app/src/shared/widgets/custom_app_bar.dart';
 import 'package:travel_app/src/shared/widgets/custom_text_field_widget.dart';
-import 'package:travel_app/src/shared/utils/user_type.dart';
 import 'package:travel_app/src/travel_ap_router.gr.dart';
 
 @RoutePage()
@@ -161,16 +161,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     BlocBuilder<AuthBloc, AuthState>(
                       builder: (context, state) {
-                        final selectedUserType =
-                            state.whenOrNull(selectedUserType
-                                : (userType) => userType) ?? UserType.user;
+                        final selectedUserRole =
+                            state.whenOrNull(
+                              selectedUserRole: (userRole) => userRole,
+                            ) ??
+                            UserRole.user;
 
                         return UserTypeDropdownWidget(
-                          value: selectedUserType,
-                          onChanged: (UserType? value) {
+                          value: selectedUserRole,
+                          onChanged: (UserRole? value) {
                             if (value != null) {
                               _authBloc.add(
-                                AuthEvent.selectUserType(userType: value),
+                                AuthEvent.selectUserRole(userRole: value),
                               );
                             }
                           },
@@ -280,16 +282,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
 
-      final userType = _authBloc.state
-          .whenOrNull(selectedUserType: (userType) => userType)
-          ?? UserType.user;
+      final userRole =
+          _authBloc.state.whenOrNull(
+            selectedUserRole: (userRole) => userRole,
+          ) ??
+          UserRole.user;
 
       _authBloc.add(AuthEvent.signUp(
-        email: email,
-        password: password,
-        name: _nameController.text,
-        userType: userType,
-      ));
+          email: email,
+          password: password,
+          name: _nameController.text,
+          userRole: userRole,
+        ));
     }
   }
 }

@@ -6,6 +6,6 @@ class AuthState with _$AuthState {
   const factory AuthState.inProgress() = _InProgress;
   const factory AuthState.success() = _Success;
   const factory AuthState.error(Exception? e) = _Error;
-  const factory AuthState.selectedUserType(UserType userType) =
-      _SelectedUserType;
+  const factory AuthState.selectedUserRole(UserRole userRole) =
+      _SelectedUserRole;
 }

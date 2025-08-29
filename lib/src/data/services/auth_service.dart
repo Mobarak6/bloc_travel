@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:travel_app/src/shared/utils/app_constants.dart';
-import 'package:travel_app/src/shared/utils/user_type.dart';
+import 'package:travel_app/src/data/models/auth/user_role.dart';
 
 @lazySingleton
 class AuthService {
@@ -11,14 +11,14 @@ class AuthService {
     required String email,
     required String password,
     required String name,
-    required UserType userType,
+    required UserRole userRole,
   }) async {
     await _supabase.auth.signUp(
       email: email,
       password: password,
       data: {
         'username': name,
-        'role': userType.name,
+        'role': userRole.name,
       },
       emailRedirectTo: AppConstants.authRedirectLink,
     );

@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel_app/src/data/repositories/auth/auth_repository.dart';
 import 'package:travel_app/src/shared/utils/result.dart';
-import 'package:travel_app/src/shared/utils/user_type.dart';
+import 'package:travel_app/src/data/models/auth/user_role.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -34,7 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email,
         password: event.password,
         name: event.name,
-        userType: event.userType,
+        userRole: event.userRole,
       );
       switch (result) {
         case Ok<bool>():
@@ -45,8 +45,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
-    on<_SelectUserType>((event, emit) {
-      emit(AuthState.selectedUserType(event.userType));
+    on<_SelectUserRole>((event, emit) {
+      emit(AuthState.selectedUserRole(event.userRole));
     });
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_app/l10n/l10n.dart';
 import 'package:travel_app/src/shared/utils/dimensions.dart';
 import 'package:travel_app/src/shared/utils/styles.dart';
-import 'package:travel_app/src/shared/utils/user_type.dart';
+import 'package:travel_app/src/data/models/auth/user_role.dart';
 
 class UserTypeDropdownWidget extends StatelessWidget {
   const UserTypeDropdownWidget({
@@ -12,13 +12,13 @@ class UserTypeDropdownWidget extends StatelessWidget {
     this.validator,
   });
 
-  final UserType? value;
-  final ValueChanged<UserType?> onChanged;
-  final String? Function(UserType?)? validator;
+  final UserRole? value;
+  final ValueChanged<UserRole?> onChanged;
+  final String? Function(UserRole?)? validator;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<UserType>(
+    return DropdownButtonFormField<UserRole>(
       value: value,
       onChanged: onChanged,
       validator: validator,
@@ -60,13 +60,13 @@ class UserTypeDropdownWidget extends StatelessWidget {
           vertical: Dimensions.spacingSmall,
         ),
       ),
-      items: UserType.values.map((UserType userType) {
-        return DropdownMenuItem<UserType>(
-          value: userType,
+      items: UserRole.values.map((UserRole userRole) {
+        return DropdownMenuItem<UserRole>(
+          value: userRole,
           child: Row(
             children: [
               Icon(
-                userType == UserType.admin
+                userRole == UserRole.admin
                     ? Icons.admin_panel_settings
                     : Icons.person,
                 color: Theme.of(context).primaryColor,
@@ -74,7 +74,7 @@ class UserTypeDropdownWidget extends StatelessWidget {
               ),
               const SizedBox(width: Dimensions.spacingSmall),
               Text(
-                userType.label,
+                userRole.label,
                 style: robotoMedium.copyWith(
                   fontSize: Dimensions.fontSizeMedium,
                 ),
@@ -84,11 +84,11 @@ class UserTypeDropdownWidget extends StatelessWidget {
         );
       }).toList(),
       selectedItemBuilder: (BuildContext context) {
-        return UserType.values.map<Widget>((UserType userType) {
+        return UserRole.values.map<Widget>((UserRole userRole) {
           return Row(
             children: [
               Icon(
-                userType == UserType.admin
+                userRole == UserRole.admin
                     ? Icons.admin_panel_settings
                     : Icons.person,
                 color: Theme.of(context).primaryColor,
@@ -96,7 +96,7 @@ class UserTypeDropdownWidget extends StatelessWidget {
               ),
               const SizedBox(width: Dimensions.spacingSmall),
               Text(
-                userType.label,
+                userRole.label,
                 style: robotoMedium.copyWith(
                   fontSize: Dimensions.fontSizeMedium,
                   color: Theme.of(context).primaryColor,

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app/l10n/l10n.dart';
-import 'package:travel_app/src/features/auth/screens/registration_screen.dart';
 import 'package:travel_app/src/shared/utils/dimensions.dart';
 import 'package:travel_app/src/shared/widgets/custom_app_bar.dart';
 import 'package:travel_app/src/travel_ap_router.gr.dart';

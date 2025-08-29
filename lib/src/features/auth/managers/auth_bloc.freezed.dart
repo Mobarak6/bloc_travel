@@ -55,13 +55,13 @@ extension AuthEventPatterns on AuthEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _SignIn value)?  signIn,TResult Function( _SignUp value)?  signUp,TResult Function( _SelectUserType value)?  selectUserType,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _SignIn value)?  signIn,TResult Function( _SignUp value)?  signUp,TResult Function( _SelectUserRole value)?  selectUserRole,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _SignIn() when signIn != null:
 return signIn(_that);case _SignUp() when signUp != null:
-return signUp(_that);case _SelectUserType() when selectUserType != null:
-return selectUserType(_that);case _:
+return signUp(_that);case _SelectUserRole() when selectUserRole != null:
+return selectUserRole(_that);case _:
   return orElse();
 
 }
@@ -79,13 +79,13 @@ return selectUserType(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _SignIn value)  signIn,required TResult Function( _SignUp value)  signUp,required TResult Function( _SelectUserType value)  selectUserType,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _SignIn value)  signIn,required TResult Function( _SignUp value)  signUp,required TResult Function( _SelectUserRole value)  selectUserRole,}){
 final _that = this;
 switch (_that) {
 case _SignIn():
 return signIn(_that);case _SignUp():
-return signUp(_that);case _SelectUserType():
-return selectUserType(_that);case _:
+return signUp(_that);case _SelectUserRole():
+return selectUserRole(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -102,13 +102,13 @@ return selectUserType(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _SignIn value)?  signIn,TResult? Function( _SignUp value)?  signUp,TResult? Function( _SelectUserType value)?  selectUserType,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _SignIn value)?  signIn,TResult? Function( _SignUp value)?  signUp,TResult? Function( _SelectUserRole value)?  selectUserRole,}){
 final _that = this;
 switch (_that) {
 case _SignIn() when signIn != null:
 return signIn(_that);case _SignUp() when signUp != null:
-return signUp(_that);case _SelectUserType() when selectUserType != null:
-return selectUserType(_that);case _:
+return signUp(_that);case _SelectUserRole() when selectUserRole != null:
+return selectUserRole(_that);case _:
   return null;
 
 }
@@ -125,12 +125,12 @@ return selectUserType(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String password)?  signIn,TResult Function( String email,  String password,  String name,  UserType userType)?  signUp,TResult Function( UserType userType)?  selectUserType,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String password)?  signIn,TResult Function( String email,  String password,  String name,  UserRole userRole)?  signUp,TResult Function( UserRole userRole)?  selectUserRole,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SignIn() when signIn != null:
 return signIn(_that.email,_that.password);case _SignUp() when signUp != null:
-return signUp(_that.email,_that.password,_that.name,_that.userType);case _SelectUserType() when selectUserType != null:
-return selectUserType(_that.userType);case _:
+return signUp(_that.email,_that.password,_that.name,_that.userRole);case _SelectUserRole() when selectUserRole != null:
+return selectUserRole(_that.userRole);case _:
   return orElse();
 
 }
@@ -148,12 +148,12 @@ return selectUserType(_that.userType);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String password)  signIn,required TResult Function( String email,  String password,  String name,  UserType userType)  signUp,required TResult Function( UserType userType)  selectUserType,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String password)  signIn,required TResult Function( String email,  String password,  String name,  UserRole userRole)  signUp,required TResult Function( UserRole userRole)  selectUserRole,}) {final _that = this;
 switch (_that) {
 case _SignIn():
 return signIn(_that.email,_that.password);case _SignUp():
-return signUp(_that.email,_that.password,_that.name,_that.userType);case _SelectUserType():
-return selectUserType(_that.userType);case _:
+return signUp(_that.email,_that.password,_that.name,_that.userRole);case _SelectUserRole():
+return selectUserRole(_that.userRole);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -170,12 +170,12 @@ return selectUserType(_that.userType);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String password)?  signIn,TResult? Function( String email,  String password,  String name,  UserType userType)?  signUp,TResult? Function( UserType userType)?  selectUserType,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String password)?  signIn,TResult? Function( String email,  String password,  String name,  UserRole userRole)?  signUp,TResult? Function( UserRole userRole)?  selectUserRole,}) {final _that = this;
 switch (_that) {
 case _SignIn() when signIn != null:
 return signIn(_that.email,_that.password);case _SignUp() when signUp != null:
-return signUp(_that.email,_that.password,_that.name,_that.userType);case _SelectUserType() when selectUserType != null:
-return selectUserType(_that.userType);case _:
+return signUp(_that.email,_that.password,_that.name,_that.userRole);case _SelectUserRole() when selectUserRole != null:
+return selectUserRole(_that.userRole);case _:
   return null;
 
 }
@@ -255,13 +255,13 @@ as String,
 
 
 class _SignUp implements AuthEvent {
-  const _SignUp({required this.email, required this.password, required this.name, required this.userType});
+  const _SignUp({required this.email, required this.password, required this.name, required this.userRole});
   
 
  final  String email;
  final  String password;
  final  String name;
- final  UserType userType;
+ final  UserRole userRole;
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -273,16 +273,16 @@ _$SignUpCopyWith<_SignUp> get copyWith => __$SignUpCopyWithImpl<_SignUp>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignUp&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.name, name) || other.name == name)&&(identical(other.userType, userType) || other.userType == userType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignUp&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.name, name) || other.name == name)&&(identical(other.userRole, userRole) || other.userRole == userRole));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,email,password,name,userType);
+int get hashCode => Object.hash(runtimeType,email,password,name,userRole);
 
 @override
 String toString() {
-  return 'AuthEvent.signUp(email: $email, password: $password, name: $name, userType: $userType)';
+  return 'AuthEvent.signUp(email: $email, password: $password, name: $name, userRole: $userRole)';
 }
 
 
@@ -293,7 +293,7 @@ abstract mixin class _$SignUpCopyWith<$Res> implements $AuthEventCopyWith<$Res> 
   factory _$SignUpCopyWith(_SignUp value, $Res Function(_SignUp) _then) = __$SignUpCopyWithImpl;
 @useResult
 $Res call({
- String email, String password, String name, UserType userType
+ String email, String password, String name, UserRole userRole
 });
 
 
@@ -310,13 +310,13 @@ class __$SignUpCopyWithImpl<$Res>
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,Object? name = null,Object? userType = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,Object? name = null,Object? userRole = null,}) {
   return _then(_SignUp(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,userType: null == userType ? _self.userType : userType // ignore: cast_nullable_to_non_nullable
-as UserType,
+as String,userRole: null == userRole ? _self.userRole : userRole // ignore: cast_nullable_to_non_nullable
+as UserRole,
   ));
 }
 
@@ -326,43 +326,43 @@ as UserType,
 /// @nodoc
 
 
-class _SelectUserType implements AuthEvent {
-  const _SelectUserType({required this.userType});
+class _SelectUserRole implements AuthEvent {
+  const _SelectUserRole({required this.userRole});
   
 
- final  UserType userType;
+ final  UserRole userRole;
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SelectUserTypeCopyWith<_SelectUserType> get copyWith => __$SelectUserTypeCopyWithImpl<_SelectUserType>(this, _$identity);
+_$SelectUserRoleCopyWith<_SelectUserRole> get copyWith => __$SelectUserRoleCopyWithImpl<_SelectUserRole>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SelectUserType&&(identical(other.userType, userType) || other.userType == userType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SelectUserRole&&(identical(other.userRole, userRole) || other.userRole == userRole));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,userType);
+int get hashCode => Object.hash(runtimeType,userRole);
 
 @override
 String toString() {
-  return 'AuthEvent.selectUserType(userType: $userType)';
+  return 'AuthEvent.selectUserRole(userRole: $userRole)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SelectUserTypeCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
-  factory _$SelectUserTypeCopyWith(_SelectUserType value, $Res Function(_SelectUserType) _then) = __$SelectUserTypeCopyWithImpl;
+abstract mixin class _$SelectUserRoleCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
+  factory _$SelectUserRoleCopyWith(_SelectUserRole value, $Res Function(_SelectUserRole) _then) = __$SelectUserRoleCopyWithImpl;
 @useResult
 $Res call({
- UserType userType
+ UserRole userRole
 });
 
 
@@ -370,19 +370,19 @@ $Res call({
 
 }
 /// @nodoc
-class __$SelectUserTypeCopyWithImpl<$Res>
-    implements _$SelectUserTypeCopyWith<$Res> {
-  __$SelectUserTypeCopyWithImpl(this._self, this._then);
+class __$SelectUserRoleCopyWithImpl<$Res>
+    implements _$SelectUserRoleCopyWith<$Res> {
+  __$SelectUserRoleCopyWithImpl(this._self, this._then);
 
-  final _SelectUserType _self;
-  final $Res Function(_SelectUserType) _then;
+  final _SelectUserRole _self;
+  final $Res Function(_SelectUserRole) _then;
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? userType = null,}) {
-  return _then(_SelectUserType(
-userType: null == userType ? _self.userType : userType // ignore: cast_nullable_to_non_nullable
-as UserType,
+@pragma('vm:prefer-inline') $Res call({Object? userRole = null,}) {
+  return _then(_SelectUserRole(
+userRole: null == userRole ? _self.userRole : userRole // ignore: cast_nullable_to_non_nullable
+as UserRole,
   ));
 }
 
@@ -433,15 +433,15 @@ extension AuthStatePatterns on AuthState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _InProgress value)?  inProgress,TResult Function( _Success value)?  success,TResult Function( _Error value)?  error,TResult Function( _SelectedUserType value)?  selectedUserType,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _InProgress value)?  inProgress,TResult Function( _Success value)?  success,TResult Function( _Error value)?  error,TResult Function( _SelectedUserRole value)?  selectedUserRole,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _InProgress() when inProgress != null:
 return inProgress(_that);case _Success() when success != null:
 return success(_that);case _Error() when error != null:
-return error(_that);case _SelectedUserType() when selectedUserType != null:
-return selectedUserType(_that);case _:
+return error(_that);case _SelectedUserRole() when selectedUserRole != null:
+return selectedUserRole(_that);case _:
   return orElse();
 
 }
@@ -459,15 +459,15 @@ return selectedUserType(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _InProgress value)  inProgress,required TResult Function( _Success value)  success,required TResult Function( _Error value)  error,required TResult Function( _SelectedUserType value)  selectedUserType,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _InProgress value)  inProgress,required TResult Function( _Success value)  success,required TResult Function( _Error value)  error,required TResult Function( _SelectedUserRole value)  selectedUserRole,}){
 final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that);case _InProgress():
 return inProgress(_that);case _Success():
 return success(_that);case _Error():
-return error(_that);case _SelectedUserType():
-return selectedUserType(_that);case _:
+return error(_that);case _SelectedUserRole():
+return selectedUserRole(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -484,15 +484,15 @@ return selectedUserType(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _InProgress value)?  inProgress,TResult? Function( _Success value)?  success,TResult? Function( _Error value)?  error,TResult? Function( _SelectedUserType value)?  selectedUserType,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _InProgress value)?  inProgress,TResult? Function( _Success value)?  success,TResult? Function( _Error value)?  error,TResult? Function( _SelectedUserRole value)?  selectedUserRole,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _InProgress() when inProgress != null:
 return inProgress(_that);case _Success() when success != null:
 return success(_that);case _Error() when error != null:
-return error(_that);case _SelectedUserType() when selectedUserType != null:
-return selectedUserType(_that);case _:
+return error(_that);case _SelectedUserRole() when selectedUserRole != null:
+return selectedUserRole(_that);case _:
   return null;
 
 }
@@ -509,14 +509,14 @@ return selectedUserType(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  inProgress,TResult Function()?  success,TResult Function( Exception? e)?  error,TResult Function( UserType userType)?  selectedUserType,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  inProgress,TResult Function()?  success,TResult Function( Exception? e)?  error,TResult Function( UserRole userRole)?  selectedUserRole,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _InProgress() when inProgress != null:
 return inProgress();case _Success() when success != null:
 return success();case _Error() when error != null:
-return error(_that.e);case _SelectedUserType() when selectedUserType != null:
-return selectedUserType(_that.userType);case _:
+return error(_that.e);case _SelectedUserRole() when selectedUserRole != null:
+return selectedUserRole(_that.userRole);case _:
   return orElse();
 
 }
@@ -534,14 +534,14 @@ return selectedUserType(_that.userType);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  inProgress,required TResult Function()  success,required TResult Function( Exception? e)  error,required TResult Function( UserType userType)  selectedUserType,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  inProgress,required TResult Function()  success,required TResult Function( Exception? e)  error,required TResult Function( UserRole userRole)  selectedUserRole,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _InProgress():
 return inProgress();case _Success():
 return success();case _Error():
-return error(_that.e);case _SelectedUserType():
-return selectedUserType(_that.userType);case _:
+return error(_that.e);case _SelectedUserRole():
+return selectedUserRole(_that.userRole);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -558,14 +558,14 @@ return selectedUserType(_that.userType);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  inProgress,TResult? Function()?  success,TResult? Function( Exception? e)?  error,TResult? Function( UserType userType)?  selectedUserType,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  inProgress,TResult? Function()?  success,TResult? Function( Exception? e)?  error,TResult? Function( UserRole userRole)?  selectedUserRole,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _InProgress() when inProgress != null:
 return inProgress();case _Success() when success != null:
 return success();case _Error() when error != null:
-return error(_that.e);case _SelectedUserType() when selectedUserType != null:
-return selectedUserType(_that.userType);case _:
+return error(_that.e);case _SelectedUserRole() when selectedUserRole != null:
+return selectedUserRole(_that.userRole);case _:
   return null;
 
 }
@@ -738,43 +738,43 @@ as Exception?,
 /// @nodoc
 
 
-class _SelectedUserType implements AuthState {
-  const _SelectedUserType(this.userType);
+class _SelectedUserRole implements AuthState {
+  const _SelectedUserRole(this.userRole);
   
 
- final  UserType userType;
+ final  UserRole userRole;
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SelectedUserTypeCopyWith<_SelectedUserType> get copyWith => __$SelectedUserTypeCopyWithImpl<_SelectedUserType>(this, _$identity);
+_$SelectedUserRoleCopyWith<_SelectedUserRole> get copyWith => __$SelectedUserRoleCopyWithImpl<_SelectedUserRole>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SelectedUserType&&(identical(other.userType, userType) || other.userType == userType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SelectedUserRole&&(identical(other.userRole, userRole) || other.userRole == userRole));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,userType);
+int get hashCode => Object.hash(runtimeType,userRole);
 
 @override
 String toString() {
-  return 'AuthState.selectedUserType(userType: $userType)';
+  return 'AuthState.selectedUserRole(userRole: $userRole)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SelectedUserTypeCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
-  factory _$SelectedUserTypeCopyWith(_SelectedUserType value, $Res Function(_SelectedUserType) _then) = __$SelectedUserTypeCopyWithImpl;
+abstract mixin class _$SelectedUserRoleCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
+  factory _$SelectedUserRoleCopyWith(_SelectedUserRole value, $Res Function(_SelectedUserRole) _then) = __$SelectedUserRoleCopyWithImpl;
 @useResult
 $Res call({
- UserType userType
+ UserRole userRole
 });
 
 
@@ -782,19 +782,19 @@ $Res call({
 
 }
 /// @nodoc
-class __$SelectedUserTypeCopyWithImpl<$Res>
-    implements _$SelectedUserTypeCopyWith<$Res> {
-  __$SelectedUserTypeCopyWithImpl(this._self, this._then);
+class __$SelectedUserRoleCopyWithImpl<$Res>
+    implements _$SelectedUserRoleCopyWith<$Res> {
+  __$SelectedUserRoleCopyWithImpl(this._self, this._then);
 
-  final _SelectedUserType _self;
-  final $Res Function(_SelectedUserType) _then;
+  final _SelectedUserRole _self;
+  final $Res Function(_SelectedUserRole) _then;
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? userType = null,}) {
-  return _then(_SelectedUserType(
-null == userType ? _self.userType : userType // ignore: cast_nullable_to_non_nullable
-as UserType,
+@pragma('vm:prefer-inline') $Res call({Object? userRole = null,}) {
+  return _then(_SelectedUserRole(
+null == userRole ? _self.userRole : userRole // ignore: cast_nullable_to_non_nullable
+as UserRole,
   ));
 }
 

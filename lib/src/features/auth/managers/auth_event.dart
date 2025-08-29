@@ -13,10 +13,10 @@ abstract class AuthEvent with _$AuthEvent {
     required String email,
     required String password,
     required String name,
-    required UserType userType,
+    required UserRole userRole,
   }) = _SignUp;
 
-  const factory AuthEvent.selectUserType({
-    required UserType userType,
-  }) = _SelectUserType;
+  const factory AuthEvent.selectUserRole({
+    required UserRole userRole,
+  }) = _SelectUserRole;
 }
