@@ -254,7 +254,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       final password = _passwordController.text.trim();
 
       _authBloc.add(
-        AuthEvent.signUpWithEmailAndPassword(
+        AuthEvent.signUp(
           email: email,
           password: password,
           name: _nameController.text,

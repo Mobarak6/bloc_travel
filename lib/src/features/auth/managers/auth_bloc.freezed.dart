@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthEvent {
 
- String get email;
+ String get email; String get password;
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AuthEventCopyWith<AuthEvent> get copyWith => _$AuthEventCopyWithImpl<AuthEvent>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthEvent&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthEvent&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,email);
+int get hashCode => Object.hash(runtimeType,email,password);
 
 @override
 String toString() {
-  return 'AuthEvent(email: $email)';
+  return 'AuthEvent(email: $email, password: $password)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $AuthEventCopyWith<$Res>  {
   factory $AuthEventCopyWith(AuthEvent value, $Res Function(AuthEvent) _then) = _$AuthEventCopyWithImpl;
 @useResult
 $Res call({
- String email
+ String email, String password
 });
 
 
@@ -62,9 +62,10 @@ class _$AuthEventCopyWithImpl<$Res>
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? password = null,}) {
   return _then(_self.copyWith(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -86,13 +87,12 @@ extension AuthEventPatterns on AuthEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _CheckAuthUserExist value)?  checkAuthUserExist,TResult Function( _SignInWithEmailAndPassword value)?  signInWithEmailAndPassword,TResult Function( _SignUpWithEmailAndPassword value)?  signUpWithEmailAndPassword,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _SignIn value)?  signIn,TResult Function( _SignUp value)?  signUp,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _CheckAuthUserExist() when checkAuthUserExist != null:
-return checkAuthUserExist(_that);case _SignInWithEmailAndPassword() when signInWithEmailAndPassword != null:
-return signInWithEmailAndPassword(_that);case _SignUpWithEmailAndPassword() when signUpWithEmailAndPassword != null:
-return signUpWithEmailAndPassword(_that);case _:
+case _SignIn() when signIn != null:
+return signIn(_that);case _SignUp() when signUp != null:
+return signUp(_that);case _:
   return orElse();
 
 }
@@ -110,13 +110,12 @@ return signUpWithEmailAndPassword(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _CheckAuthUserExist value)  checkAuthUserExist,required TResult Function( _SignInWithEmailAndPassword value)  signInWithEmailAndPassword,required TResult Function( _SignUpWithEmailAndPassword value)  signUpWithEmailAndPassword,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _SignIn value)  signIn,required TResult Function( _SignUp value)  signUp,}){
 final _that = this;
 switch (_that) {
-case _CheckAuthUserExist():
-return checkAuthUserExist(_that);case _SignInWithEmailAndPassword():
-return signInWithEmailAndPassword(_that);case _SignUpWithEmailAndPassword():
-return signUpWithEmailAndPassword(_that);case _:
+case _SignIn():
+return signIn(_that);case _SignUp():
+return signUp(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -133,13 +132,12 @@ return signUpWithEmailAndPassword(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _CheckAuthUserExist value)?  checkAuthUserExist,TResult? Function( _SignInWithEmailAndPassword value)?  signInWithEmailAndPassword,TResult? Function( _SignUpWithEmailAndPassword value)?  signUpWithEmailAndPassword,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _SignIn value)?  signIn,TResult? Function( _SignUp value)?  signUp,}){
 final _that = this;
 switch (_that) {
-case _CheckAuthUserExist() when checkAuthUserExist != null:
-return checkAuthUserExist(_that);case _SignInWithEmailAndPassword() when signInWithEmailAndPassword != null:
-return signInWithEmailAndPassword(_that);case _SignUpWithEmailAndPassword() when signUpWithEmailAndPassword != null:
-return signUpWithEmailAndPassword(_that);case _:
+case _SignIn() when signIn != null:
+return signIn(_that);case _SignUp() when signUp != null:
+return signUp(_that);case _:
   return null;
 
 }
@@ -156,12 +154,11 @@ return signUpWithEmailAndPassword(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email)?  checkAuthUserExist,TResult Function( String email,  String password)?  signInWithEmailAndPassword,TResult Function( String email,  String password,  String name)?  signUpWithEmailAndPassword,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String password)?  signIn,TResult Function( String email,  String password,  String name)?  signUp,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _CheckAuthUserExist() when checkAuthUserExist != null:
-return checkAuthUserExist(_that.email);case _SignInWithEmailAndPassword() when signInWithEmailAndPassword != null:
-return signInWithEmailAndPassword(_that.email,_that.password);case _SignUpWithEmailAndPassword() when signUpWithEmailAndPassword != null:
-return signUpWithEmailAndPassword(_that.email,_that.password,_that.name);case _:
+case _SignIn() when signIn != null:
+return signIn(_that.email,_that.password);case _SignUp() when signUp != null:
+return signUp(_that.email,_that.password,_that.name);case _:
   return orElse();
 
 }
@@ -179,12 +176,11 @@ return signUpWithEmailAndPassword(_that.email,_that.password,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email)  checkAuthUserExist,required TResult Function( String email,  String password)  signInWithEmailAndPassword,required TResult Function( String email,  String password,  String name)  signUpWithEmailAndPassword,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String password)  signIn,required TResult Function( String email,  String password,  String name)  signUp,}) {final _that = this;
 switch (_that) {
-case _CheckAuthUserExist():
-return checkAuthUserExist(_that.email);case _SignInWithEmailAndPassword():
-return signInWithEmailAndPassword(_that.email,_that.password);case _SignUpWithEmailAndPassword():
-return signUpWithEmailAndPassword(_that.email,_that.password,_that.name);case _:
+case _SignIn():
+return signIn(_that.email,_that.password);case _SignUp():
+return signUp(_that.email,_that.password,_that.name);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,12 +197,11 @@ return signUpWithEmailAndPassword(_that.email,_that.password,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email)?  checkAuthUserExist,TResult? Function( String email,  String password)?  signInWithEmailAndPassword,TResult? Function( String email,  String password,  String name)?  signUpWithEmailAndPassword,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String password)?  signIn,TResult? Function( String email,  String password,  String name)?  signUp,}) {final _that = this;
 switch (_that) {
-case _CheckAuthUserExist() when checkAuthUserExist != null:
-return checkAuthUserExist(_that.email);case _SignInWithEmailAndPassword() when signInWithEmailAndPassword != null:
-return signInWithEmailAndPassword(_that.email,_that.password);case _SignUpWithEmailAndPassword() when signUpWithEmailAndPassword != null:
-return signUpWithEmailAndPassword(_that.email,_that.password,_that.name);case _:
+case _SignIn() when signIn != null:
+return signIn(_that.email,_that.password);case _SignUp() when signUp != null:
+return signUp(_that.email,_that.password,_that.name);case _:
   return null;
 
 }
@@ -217,90 +212,24 @@ return signUpWithEmailAndPassword(_that.email,_that.password,_that.name);case _:
 /// @nodoc
 
 
-class _CheckAuthUserExist implements AuthEvent {
-  const _CheckAuthUserExist(this.email);
+class _SignIn implements AuthEvent {
+  const _SignIn({required this.email, required this.password});
   
 
 @override final  String email;
+@override final  String password;
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$CheckAuthUserExistCopyWith<_CheckAuthUserExist> get copyWith => __$CheckAuthUserExistCopyWithImpl<_CheckAuthUserExist>(this, _$identity);
+_$SignInCopyWith<_SignIn> get copyWith => __$SignInCopyWithImpl<_SignIn>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CheckAuthUserExist&&(identical(other.email, email) || other.email == email));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,email);
-
-@override
-String toString() {
-  return 'AuthEvent.checkAuthUserExist(email: $email)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$CheckAuthUserExistCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
-  factory _$CheckAuthUserExistCopyWith(_CheckAuthUserExist value, $Res Function(_CheckAuthUserExist) _then) = __$CheckAuthUserExistCopyWithImpl;
-@override @useResult
-$Res call({
- String email
-});
-
-
-
-
-}
-/// @nodoc
-class __$CheckAuthUserExistCopyWithImpl<$Res>
-    implements _$CheckAuthUserExistCopyWith<$Res> {
-  __$CheckAuthUserExistCopyWithImpl(this._self, this._then);
-
-  final _CheckAuthUserExist _self;
-  final $Res Function(_CheckAuthUserExist) _then;
-
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? email = null,}) {
-  return _then(_CheckAuthUserExist(
-null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _SignInWithEmailAndPassword implements AuthEvent {
-  const _SignInWithEmailAndPassword({required this.email, required this.password});
-  
-
-@override final  String email;
- final  String password;
-
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$SignInWithEmailAndPasswordCopyWith<_SignInWithEmailAndPassword> get copyWith => __$SignInWithEmailAndPasswordCopyWithImpl<_SignInWithEmailAndPassword>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignInWithEmailAndPassword&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignIn&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
 
@@ -309,15 +238,15 @@ int get hashCode => Object.hash(runtimeType,email,password);
 
 @override
 String toString() {
-  return 'AuthEvent.signInWithEmailAndPassword(email: $email, password: $password)';
+  return 'AuthEvent.signIn(email: $email, password: $password)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SignInWithEmailAndPasswordCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
-  factory _$SignInWithEmailAndPasswordCopyWith(_SignInWithEmailAndPassword value, $Res Function(_SignInWithEmailAndPassword) _then) = __$SignInWithEmailAndPasswordCopyWithImpl;
+abstract mixin class _$SignInCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
+  factory _$SignInCopyWith(_SignIn value, $Res Function(_SignIn) _then) = __$SignInCopyWithImpl;
 @override @useResult
 $Res call({
  String email, String password
@@ -328,17 +257,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$SignInWithEmailAndPasswordCopyWithImpl<$Res>
-    implements _$SignInWithEmailAndPasswordCopyWith<$Res> {
-  __$SignInWithEmailAndPasswordCopyWithImpl(this._self, this._then);
+class __$SignInCopyWithImpl<$Res>
+    implements _$SignInCopyWith<$Res> {
+  __$SignInCopyWithImpl(this._self, this._then);
 
-  final _SignInWithEmailAndPassword _self;
-  final $Res Function(_SignInWithEmailAndPassword) _then;
+  final _SignIn _self;
+  final $Res Function(_SignIn) _then;
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,}) {
-  return _then(_SignInWithEmailAndPassword(
+  return _then(_SignIn(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,
@@ -351,25 +280,25 @@ as String,
 /// @nodoc
 
 
-class _SignUpWithEmailAndPassword implements AuthEvent {
-  const _SignUpWithEmailAndPassword({required this.email, required this.password, required this.name});
+class _SignUp implements AuthEvent {
+  const _SignUp({required this.email, required this.password, required this.name});
   
 
 @override final  String email;
- final  String password;
+@override final  String password;
  final  String name;
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SignUpWithEmailAndPasswordCopyWith<_SignUpWithEmailAndPassword> get copyWith => __$SignUpWithEmailAndPasswordCopyWithImpl<_SignUpWithEmailAndPassword>(this, _$identity);
+_$SignUpCopyWith<_SignUp> get copyWith => __$SignUpCopyWithImpl<_SignUp>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignUpWithEmailAndPassword&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignUp&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.name, name) || other.name == name));
 }
 
 
@@ -378,15 +307,15 @@ int get hashCode => Object.hash(runtimeType,email,password,name);
 
 @override
 String toString() {
-  return 'AuthEvent.signUpWithEmailAndPassword(email: $email, password: $password, name: $name)';
+  return 'AuthEvent.signUp(email: $email, password: $password, name: $name)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SignUpWithEmailAndPasswordCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
-  factory _$SignUpWithEmailAndPasswordCopyWith(_SignUpWithEmailAndPassword value, $Res Function(_SignUpWithEmailAndPassword) _then) = __$SignUpWithEmailAndPasswordCopyWithImpl;
+abstract mixin class _$SignUpCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
+  factory _$SignUpCopyWith(_SignUp value, $Res Function(_SignUp) _then) = __$SignUpCopyWithImpl;
 @override @useResult
 $Res call({
  String email, String password, String name
@@ -397,17 +326,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$SignUpWithEmailAndPasswordCopyWithImpl<$Res>
-    implements _$SignUpWithEmailAndPasswordCopyWith<$Res> {
-  __$SignUpWithEmailAndPasswordCopyWithImpl(this._self, this._then);
+class __$SignUpCopyWithImpl<$Res>
+    implements _$SignUpCopyWith<$Res> {
+  __$SignUpCopyWithImpl(this._self, this._then);
 
-  final _SignUpWithEmailAndPassword _self;
-  final $Res Function(_SignUpWithEmailAndPassword) _then;
+  final _SignUp _self;
+  final $Res Function(_SignUp) _then;
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,Object? name = null,}) {
-  return _then(_SignUpWithEmailAndPassword(
+  return _then(_SignUp(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable

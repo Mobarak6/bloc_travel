@@ -9,12 +9,12 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthService _authService;
 
   @override
-  Future<Result<bool>> signInWithEmailAndPassword({
+  Future<Result<bool>> signIn({
     required String email,
     required String password,
   }) async {
     try {
-      final response = await _authService.signInWithEmailAndPassword(
+      final response = await _authService.signIn(
         email: email,
         password: password,
       );
@@ -26,13 +26,13 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<bool>> signUpWithEmailAndPassword({
+  Future<Result<bool>> signUp({
     required String email,
     required String password,
     required String name,
   }) async {
     try {
-      await _authService.signUpWithEmail(
+      await _authService.signUp(
         email: email, password: password, name: name,
       );
 

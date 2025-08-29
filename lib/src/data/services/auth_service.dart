@@ -6,7 +6,7 @@ import 'package:travel_app/src/shared/utils/app_constants.dart';
 class AuthService {
   final SupabaseClient _supabase = Supabase.instance.client;
 
-  Future<void> signUpWithEmail({
+  Future<void> signUp({
     required String email,
     required String password,
     required String name,
@@ -22,10 +22,10 @@ class AuthService {
     );
   }
 
-  Future<AuthResponse> signInWithEmailAndPassword({
+  Future<AuthResponse> signIn({
     required String email,
     required String password,
   }) async {
-    return _supabase.auth.signInWithPassword(password: password);
+    return _supabase.auth.signInWithPassword(email: email, password: password);
   }
 }

@@ -4,14 +4,14 @@ part of 'auth_bloc.dart';
 abstract class AuthEvent with _$AuthEvent {
   // const factory AuthEvent.checkAuthUserExist(String email) =_CheckAuthUserExist;
 
-  const factory AuthEvent.signInWithEmailAndPassword({
+  const factory AuthEvent.signIn({
     required String email,
     required String password,
-  }) = _SignInWithEmailAndPassword;
+  }) = _SignIn;
 
-  const factory AuthEvent.signUpWithEmailAndPassword({
+  const factory AuthEvent.signUp({
     required String email,
     required String password,
     required String name,
-  }) = _SignUpWithEmailAndPassword;
+  }) = _SignUp;
 }

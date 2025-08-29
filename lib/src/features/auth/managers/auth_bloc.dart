@@ -11,9 +11,9 @@ part 'auth_bloc.freezed.dart';
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this.authRepository) : super(const AuthState.initial()) {
-    on<_SignInWithEmailAndPassword>((event, emit) async {
+    on<_SignIn>((event, emit) async {
       emit(const AuthState.inProgress());
-      final result = await authRepository.signInWithEmailAndPassword(
+      final result = await authRepository.signIn(
         email: event.email,
         password: event.password,
       );
@@ -27,9 +27,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
-    on<_SignUpWithEmailAndPassword>((event, emit) async {
+    on<_SignUp>((event, emit) async {
       emit(const AuthState.inProgress());
-      final result = await authRepository.signUpWithEmailAndPassword(
+      final result = await authRepository.signUp(
         email: event.email,
         password: event.password,
         name: event.name,
