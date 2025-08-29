@@ -10,21 +10,21 @@ class UserInfoModel {
     required this.role,
   });
 
-  final String id;
-  final String username;
-  final String email;
-  final DateTime createdAt;
-  final UserRole role;
-
   factory UserInfoModel.fromJson(Map<String, dynamic> json) {
     return UserInfoModel(
       id: json['id'] as String,
       username: json['username'] as String,
       email: json['email'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
-      role: UserRoleX.fromJson(json['role'] as String),
+      role: UserRole.fromString(json['role'] as String),
     );
   }
+
+  final String id;
+  final String username;
+  final String email;
+  final DateTime createdAt;
+  final UserRole role;
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -35,25 +35,20 @@ class UserInfoModel {
   };
 }
 
-enum UserRole { user, admin }
+enum UserRole {
+  user('User'),
+  admin('Admin');
 
-extension UserRoleX on UserRole {
-  static UserRole fromJson(String value) {
-    switch (value.toLowerCase()) {
-      case 'admin':
-        return UserRole.admin;
-      case 'user':
-      default:
-        return UserRole.user;
-    }
+  const UserRole(this.label);
+
+  final String label;
+
+  static UserRole fromString(String value) {
+    return UserRole.values.firstWhere(
+          (type) => type.name == value.toLowerCase(),
+      orElse: () => UserRole.user,
+    );
   }
 
-  String toJson() {
-    switch (this) {
-      case UserRole.admin:
-        return 'admin';
-      case UserRole.user:
-        return 'user';
-    }
-  }
+  String toJson() => name;
 }

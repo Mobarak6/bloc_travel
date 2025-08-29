@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/l10n/l10n.dart';
+import 'package:travel_app/src/data/models/user_info_model.dart';
 import 'package:travel_app/src/shared/utils/dimensions.dart';
 import 'package:travel_app/src/shared/utils/styles.dart';
-import 'package:travel_app/src/data/models/auth/user_role.dart';
 
 class UserTypeDropdownWidget extends StatelessWidget {
   const UserTypeDropdownWidget({
@@ -74,7 +74,7 @@ class UserTypeDropdownWidget extends StatelessWidget {
               ),
               const SizedBox(width: Dimensions.spacingSmall),
               Text(
-                userRole.label,
+                userRole.name,
                 style: robotoMedium.copyWith(
                   fontSize: Dimensions.fontSizeMedium,
                 ),
@@ -96,7 +96,7 @@ class UserTypeDropdownWidget extends StatelessWidget {
               ),
               const SizedBox(width: Dimensions.spacingSmall),
               Text(
-                userRole.label,
+                userRole.name,
                 style: robotoMedium.copyWith(
                   fontSize: Dimensions.fontSizeMedium,
                   color: Theme.of(context).primaryColor,
