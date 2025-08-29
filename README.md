@@ -34,6 +34,7 @@ $ flutter run --flavor production --target lib/main_production.dart
 _\*Travel App works on iOS, Android, Web, and Windows._
 
 ---
+dart run build_runner build --delete-conflicting-outputs
 
 ## Running Tests 🧪
 

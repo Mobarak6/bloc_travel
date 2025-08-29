@@ -5,5 +5,9 @@
         "description": "Text shown in the AppBar of the Counter Page"
     },
      "submit": "Submit",
-     "increment": "Increment"
-}
+     "increment": "Increment",
+     "non_changeable": "Non Changeable",
+     "login": "Login",
+     "home": "Home",
+     "registration": "Registration"
+ }

@@ -21,6 +21,9 @@ class TravelAppRouter extends RootStackRouter {
     AutoRoute(
       path: '/',
       page: SplashRoute.page,
+      guards: [
+        AuthGuard(supabaseClient),
+      ]
     ),
     AutoRoute(
       path: '/home',
@@ -43,4 +46,24 @@ class TravelAppRouter extends RootStackRouter {
     transitionsBuilder: TransitionsBuilders.fadeIn,
     duration: const Duration(milliseconds: 200),
   );
+}
+
+
+class AuthGuard extends AutoRouteGuard {
+
+  AuthGuard(this.supabase);
+  final SupabaseClient supabase;
+
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    final user = supabase.auth.currentUser;
+
+    if (user != null) {
+      /// User is logged in → continue to home
+      router.replace(const HomeRoute());
+    } else {
+      /// User not logged in → redirect to login
+      router.replace(const LoginRoute());
+    }
+  }
 }
