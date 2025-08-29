@@ -1,4 +1,3 @@
-
 import 'package:injectable/injectable.dart';
 import 'package:travel_app/src/data/repositories/auth/auth_repository.dart';
 import 'package:travel_app/src/data/services/auth_service.dart';
@@ -16,11 +15,11 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     try {
       final response = await _authService.signInWithEmailAndPassword(
-        email: email, password: password,
+        email: email,
+        password: password,
       );
 
       return Result.ok(response.user != null);
-
     } on Exception catch (e) {
       return Result.error(e);
     }
@@ -30,9 +29,12 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Result<bool>> signUpWithEmailAndPassword({
     required String email,
     required String password,
+    required String name,
   }) async {
     try {
-      await _authService.signUpWithEmail(email: email, password: password);
+      await _authService.signUpWithEmail(
+        email: email, password: password, name: name,
+      );
 
       return Result.ok(true);
     } on Exception catch (e) {
@@ -45,8 +47,4 @@ class AuthRepositoryImpl implements AuthRepository {
     // TODO: implement signOut
     throw UnimplementedError();
   }
-
-
-
 }
-

@@ -10,29 +10,12 @@ part 'auth_bloc.freezed.dart';
 
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-
   AuthBloc(this.authRepository) : super(const AuthState.initial()) {
-
-    // on<_CheckAuthUserExists>((event, emit) async {
-    //   emit(const AuthState.checking());
-    //   final result = await authRepository.checkAuthUserExists(event.email);
-    //   print('---------------here-----(x)');
-    //
-    //
-    //   switch (result) {
-    //     case Ok<bool>():
-    //       emit(const AuthState.checked());
-    //     case Error<bool>():
-    //       print('---------------here-----(2)');
-    //
-    //       emit(AuthState.error(result.error));
-    //   }
-    // });
-
     on<_SignInWithEmailAndPassword>((event, emit) async {
       emit(const AuthState.inProgress());
       final result = await authRepository.signInWithEmailAndPassword(
-       email: event.email, password: event.password,
+        email: event.email,
+        password: event.password,
       );
 
       switch (result) {
@@ -42,14 +25,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         case Error<bool>():
           emit(AuthState.error(result.error));
       }
-
     });
-
 
     on<_SignUpWithEmailAndPassword>((event, emit) async {
       emit(const AuthState.inProgress());
       final result = await authRepository.signUpWithEmailAndPassword(
-        email: event.email, password: event.password,
+        email: event.email,
+        password: event.password,
+        name: event.name,
       );
       switch (result) {
         case Ok<bool>():
@@ -57,10 +40,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         case Error<bool>():
           emit(AuthState.error(result.error));
-    }});
-
+      }
+    });
   }
-
 
   final AuthRepository authRepository;
 }

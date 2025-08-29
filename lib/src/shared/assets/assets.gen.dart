@@ -38,6 +38,9 @@ class $AssetsFontsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/logo.png
+  AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
+
   /// File path: assets/images/profile_place_holder.png
   AssetGenImage get profilePlaceHolder =>
       const AssetGenImage('assets/images/profile_place_holder.png');
@@ -47,7 +50,7 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/splash_image.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [profilePlaceHolder, splashImage];
+  List<AssetGenImage> get values => [logo, profilePlaceHolder, splashImage];
 }
 
 class Assets {

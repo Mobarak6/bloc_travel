@@ -3,7 +3,7 @@ import 'package:travel_app/src/shared/assets/fonts.gen.dart';
 
 ThemeData light = ThemeData(
     fontFamily: FontFamily.roboto,
-    primaryColor: const Color(0xFFA52524),
+    primaryColor: const Color(0xFF58CB6B),
     secondaryHeaderColor: const Color(0xFF4794FF),
     disabledColor: const Color(0xFFBABFC4),
     brightness: Brightness.light,

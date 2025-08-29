@@ -9,10 +9,15 @@ class AuthService {
   Future<void> signUpWithEmail({
     required String email,
     required String password,
+    required String name,
   }) async {
     await _supabase.auth.signUp(
       email: email,
       password: password,
+      data: {
+        'username': name,
+        'role': 'user',
+      },
       emailRedirectTo: AppConstants.authRedirectLink,
     );
   }
@@ -21,7 +26,6 @@ class AuthService {
     required String email,
     required String password,
   }) async {
-   return _supabase.auth.signInWithPassword(password: password);
-
+    return _supabase.auth.signInWithPassword(password: password);
   }
 }

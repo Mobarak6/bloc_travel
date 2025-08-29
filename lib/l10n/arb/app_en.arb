@@ -29,5 +29,7 @@
      "pleaseEnterAPassword": "Please enter a password",
      "passwordMustBeAtLeast8Characters": "Password must be at least 8 characters",
      "pleaseConfirmYourPassword": "Please confirm your password",
-     "passwordsDoNotMatch": "Passwords do not match"
+     "passwordsDoNotMatch": "Passwords do not match",
+     "this_field_is_required": "This field is required"
+
 }
