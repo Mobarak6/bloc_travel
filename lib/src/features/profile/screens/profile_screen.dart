@@ -6,14 +6,16 @@ import 'package:travel_app/app_di.dart';
 import 'package:travel_app/l10n/l10n.dart';
 import 'package:travel_app/src/data/models/profile_model.dart';
 import 'package:travel_app/src/features/profile/managers/profile_bloc.dart';
-import 'package:travel_app/src/features/profile/widgets/profile_content_widget.dart';
+
 import 'package:travel_app/src/features/profile/widgets/profile_error_widget.dart';
 import 'package:travel_app/src/features/profile/widgets/profile_loading_widget.dart';
+import 'package:travel_app/src/shared/assets/assets.gen.dart';
 import 'package:travel_app/src/shared/extensions/overlay_extensions.dart';
 import 'package:travel_app/src/shared/utils/dimensions.dart';
 import 'package:travel_app/src/shared/utils/styles.dart';
 import 'package:travel_app/src/shared/utils/validate_check.dart';
 import 'package:travel_app/src/shared/widgets/custom_app_bar.dart';
+import 'package:travel_app/src/shared/widgets/custom_image_widget.dart';
 import 'package:travel_app/src/shared/widgets/custom_text_field_widget.dart';
 
 @RoutePage()
@@ -155,11 +157,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 radius: 60,
                 backgroundImage: selectedImagePath != null
                     ? AssetImage(selectedImagePath)
-                    : (profile.avatarUrl != null
-                          ? NetworkImage(profile.avatarUrl!) as ImageProvider
-                          : const AssetImage(
-                              'assets/images/profile_place_holder.png',
-                            )),
+                    : null,
+                child: profile.avatarUrl != null && selectedImagePath == null
+                    ? ClipOval(
+                        child: CustomImageWidget(
+                          image: profile.avatarUrl!,
+                          height: 120,
+                          width: 120,
+                          placeholder: Assets.images.profilePlaceHolder.path,
+                        ),
+                      )
+                    : null,
               ),
               Positioned(
                 bottom: 0,
@@ -221,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         const SizedBox(height: Dimensions.spacingLarge),
 
-        // Email Field (Read-only)
+        // Email Field (Read-only - Disabled)
         CustomTextFieldWidget(
           labelText: context.l10n.email,
           hintText: profile.email ?? '',
@@ -229,10 +237,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           focusNode: FocusNode()..unfocus(),
           inputType: TextInputType.emailAddress,
           prefixIcon: Icons.email,
+          enabled: false,
         ),
         const SizedBox(height: Dimensions.spacingLarge),
 
-        // Role Field (Read-only)
+        // Role Field (Read-only - Disabled)
         CustomTextFieldWidget(
           labelText: context.l10n.role,
           hintText: profile.role?.name.toUpperCase() ?? '',
@@ -242,10 +251,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           focusNode: FocusNode()..unfocus(),
           inputType: TextInputType.text,
           prefixIcon: Icons.admin_panel_settings,
+          enabled: false,
         ),
         const SizedBox(height: Dimensions.spacingLarge),
 
-        // Created At Field (Read-only)
+        // Created At Field (Read-only - Disabled)
         CustomTextFieldWidget(
           labelText: context.l10n.createdAt,
           hintText: _formatDate(profile.createdAt),
@@ -255,6 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           focusNode: FocusNode()..unfocus(),
           inputType: TextInputType.text,
           prefixIcon: Icons.calendar_today,
+          enabled: false,
         ),
       ],
     );

@@ -13,6 +13,7 @@ class CustomTextFieldWidget extends StatelessWidget {
     this.nextFocus,
     this.isPassword = false,
     this.validator,
+    this.enabled = true,
   });
 
   final String labelText;
@@ -24,6 +25,7 @@ class CustomTextFieldWidget extends StatelessWidget {
   final IconData prefixIcon;
   final bool isPassword;
   final String? Function(String?)? validator;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class CustomTextFieldWidget extends StatelessWidget {
       focusNode: focusNode,
       keyboardType: inputType,
       obscureText: isPassword,
+      enabled: enabled,
       textInputAction: nextFocus != null
           ? TextInputAction.next
           : TextInputAction.done,
@@ -56,6 +59,10 @@ class CustomTextFieldWidget extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             width: 2,
           ),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+          borderSide: BorderSide(color: Theme.of(context).disabledColor),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
