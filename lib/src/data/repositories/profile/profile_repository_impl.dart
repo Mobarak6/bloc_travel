@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:injectable/injectable.dart';
 import 'package:travel_app/src/data/models/profile_model.dart';
 import 'package:travel_app/src/data/repositories/profile/profile_repository.dart';
@@ -46,6 +47,21 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
       final profile = Profile.fromJson(response);
       return Result.ok(profile);
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
+
+  @override
+  Future<Result<String>> updateImage(String imagePath) async {
+    try {
+      final imageFile = File(imagePath);
+      if (!await imageFile.exists()) {
+        throw Exception('Image file does not exist: $imagePath');
+      }
+
+      final imageUrl = await _profileService.updateImage(imageFile);
+      return Result.ok(imageUrl);
     } on Exception catch (e) {
       return Result.error(e);
     }

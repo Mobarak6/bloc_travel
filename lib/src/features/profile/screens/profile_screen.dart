@@ -17,6 +17,7 @@ import 'package:travel_app/src/shared/utils/validate_check.dart';
 import 'package:travel_app/src/shared/widgets/custom_app_bar.dart';
 import 'package:travel_app/src/shared/widgets/custom_image_widget.dart';
 import 'package:travel_app/src/shared/widgets/custom_text_field_widget.dart';
+import 'dart:io';
 
 @RoutePage()
 class ProfileScreen extends StatefulWidget {
@@ -75,13 +76,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
               return state.when(
                 initial: () => const ProfileLoadingWidget(),
                 loading: () => const ProfileLoadingWidget(),
-                loaded: (profile) => _buildProfileContent(profile, false, null),
-                updating: () =>
-                    _buildProfileContent(_getCurrentProfile(), true, null),
-                updated: (profile) =>
-                    _buildProfileContent(profile, false, null),
+                loaded: (profile) => ProfileContentWidget(
+                  profile: profile,
+                  usernameController: _usernameController,
+                  usernameFocus: _usernameFocus,
+                  formKey: _formKey,
+                  onPickImage: _pickImage,
+                  onUpdateProfile: _updateProfile,
+                  isLoading: false,
+                  selectedImagePath: null,
+                ),
+                updating: () => ProfileContentWidget(
+                  profile: _getCurrentProfile(),
+                  usernameController: _usernameController,
+                  usernameFocus: _usernameFocus,
+                  formKey: _formKey,
+                  onPickImage: _pickImage,
+                  onUpdateProfile: _updateProfile,
+                  isLoading: true,
+                  selectedImagePath: null,
+                ),
+                updated: (profile) => ProfileContentWidget(
+                  profile: profile,
+                  usernameController: _usernameController,
+                  usernameFocus: _usernameFocus,
+                  formKey: _formKey,
+                  onPickImage: _pickImage,
+                  onUpdateProfile: _updateProfile,
+                  isLoading: false,
+                  selectedImagePath: null,
+                ),
                 imageSelected: (profile, selectedImagePath) =>
-                    _buildProfileContent(profile, false, selectedImagePath),
+                    ProfileContentWidget(
+                      profile: profile,
+                      usernameController: _usernameController,
+                      usernameFocus: _usernameFocus,
+                      formKey: _formKey,
+                      onPickImage: _pickImage,
+                      onUpdateProfile: _updateProfile,
+                      isLoading: false,
+                      selectedImagePath: selectedImagePath,
+                    ),
                 error: (message) => ProfileErrorWidget(
                   message: message,
                   onRetry: () =>
@@ -95,13 +130,98 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildProfileContent(
-    Profile profile,
-    bool isLoading,
-    String? selectedImagePath,
-  ) {
+  Profile _getCurrentProfile() {
+    return Profile.mockProfile();
+  }
+
+  Future<void> _pickImage() async {
+    try {
+      // Show loading indicator
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(context.l10n.loadingProfile),
+              ],
+            ),
+            duration: const Duration(seconds: 1),
+          ),
+        );
+      }
+
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 80,
+        maxWidth: 800,
+        maxHeight: 800,
+      );
+
+      if (image != null) {
+        // Use BLoC instead of setState
+        _profileBloc.add(ProfileEvent.selectImage(imagePath: image.path));
+
+        if (mounted) {
+          context.showSnackBar(context.l10n.imageSelected);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        context.showSnackBar('Failed to select image. Please try again.');
+      }
+    }
+  }
+
+  void _updateProfile(String? selectedImagePath) {
+    if (_formKey.currentState?.validate() ?? false) {
+      final username = _usernameController.text.trim();
+
+      _profileBloc.add(
+        ProfileEvent.updateProfile(
+          username: username,
+          avatarUrl: selectedImagePath,
+        ),
+      );
+    }
+  }
+}
+
+class ProfileContentWidget extends StatelessWidget {
+  const ProfileContentWidget({
+    required this.profile,
+    required this.usernameController,
+    required this.usernameFocus,
+    required this.formKey,
+    required this.onPickImage,
+    required this.onUpdateProfile,
+    required this.isLoading,
+    this.selectedImagePath,
+    super.key,
+  });
+
+  final Profile profile;
+  final TextEditingController usernameController;
+  final FocusNode usernameFocus;
+  final GlobalKey<FormState> formKey;
+  final VoidCallback onPickImage;
+  final Function(String?) onUpdateProfile;
+  final bool isLoading;
+  final String? selectedImagePath;
+
+  @override
+  Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: formKey,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,15 +249,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
             // Avatar Section
-            _buildAvatarSection(profile, selectedImagePath),
+            AvatarSectionWidget(
+              profile: profile,
+              selectedImagePath: selectedImagePath,
+              onPickImage: onPickImage,
+            ),
             const SizedBox(height: Dimensions.spacingExtraLarge),
 
             // Profile Info Section
-            _buildProfileInfoSection(profile),
+            ProfileInfoSectionWidget(
+              profile: profile,
+              usernameController: usernameController,
+              usernameFocus: usernameFocus,
+            ),
             const SizedBox(height: Dimensions.spacingExtraLarge),
 
             // Update Button
-            _buildUpdateButton(isLoading, selectedImagePath),
+            UpdateButtonWidget(
+              isLoading: isLoading,
+              selectedImagePath: selectedImagePath,
+              onUpdateProfile: onUpdateProfile,
+            ),
 
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
           ],
@@ -145,29 +277,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+}
 
-  Widget _buildAvatarSection(Profile profile, String? selectedImagePath) {
+class AvatarSectionWidget extends StatelessWidget {
+  const AvatarSectionWidget({
+    required this.profile,
+    this.selectedImagePath,
+    required this.onPickImage,
+    super.key,
+  });
+
+  final Profile profile;
+  final String? selectedImagePath;
+  final VoidCallback onPickImage;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         GestureDetector(
-          onTap: _pickImage,
+          onTap: onPickImage,
           child: Stack(
             children: [
               CircleAvatar(
                 radius: 60,
-                backgroundImage: selectedImagePath != null
-                    ? AssetImage(selectedImagePath)
-                    : null,
-                child: profile.avatarUrl != null && selectedImagePath == null
-                    ? ClipOval(
-                        child: CustomImageWidget(
-                          image: profile.avatarUrl!,
-                          height: 120,
-                          width: 120,
-                          placeholder: Assets.images.profilePlaceHolder.path,
-                        ),
-                      )
-                    : null,
+                backgroundImage: _getAvatarImage(profile, selectedImagePath),
+                child: _getAvatarChild(profile, selectedImagePath),
               ),
               Positioned(
                 bottom: 0,
@@ -200,7 +335,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildProfileInfoSection(Profile profile) {
+  ImageProvider? _getAvatarImage(Profile profile, String? selectedImagePath) {
+    if (selectedImagePath != null) {
+      // Selected image from gallery - use FileImage for file paths
+      return FileImage(File(selectedImagePath));
+    } else if (profile.avatarUrl != null) {
+      // Network image - return null to use child widget
+      return null;
+    } else {
+      // Default placeholder
+      return const AssetImage('assets/images/profile_place_holder.png');
+    }
+  }
+
+  Widget? _getAvatarChild(Profile profile, String? selectedImagePath) {
+    if (selectedImagePath != null) {
+      // Selected image is handled by backgroundImage
+      return null;
+    } else if (profile.avatarUrl != null) {
+      // Network image - use CustomImageWidget
+      return ClipOval(
+        child: CustomImageWidget(
+          image: profile.avatarUrl!,
+          height: 120,
+          width: 120,
+          placeholder: Assets.images.profilePlaceHolder.path,
+        ),
+      );
+    } else {
+      // No image - no child needed
+      return null;
+    }
+  }
+}
+
+class ProfileInfoSectionWidget extends StatelessWidget {
+  const ProfileInfoSectionWidget({
+    required this.profile,
+    required this.usernameController,
+    required this.usernameFocus,
+    super.key,
+  });
+
+  final Profile profile;
+  final TextEditingController usernameController;
+  final FocusNode usernameFocus;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -217,8 +399,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         CustomTextFieldWidget(
           labelText: context.l10n.username,
           hintText: context.l10n.enterUsername,
-          controller: _usernameController,
-          focusNode: _usernameFocus,
+          controller: usernameController,
+          focusNode: usernameFocus,
           inputType: TextInputType.text,
           prefixIcon: Icons.person,
           validator: (value) => ValidateCheck.validateEmptyText(
@@ -271,12 +453,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildUpdateButton(bool isLoading, String? selectedImagePath) {
+  String _formatDate(String? dateString) {
+    if (dateString == null) return '';
+    try {
+      final date = DateTime.parse(dateString);
+      return '${date.day}/${date.month}/${date.year}';
+    } catch (e) {
+      return dateString;
+    }
+  }
+}
+
+class UpdateButtonWidget extends StatelessWidget {
+  const UpdateButtonWidget({
+    required this.isLoading,
+    this.selectedImagePath,
+    required this.onUpdateProfile,
+    super.key,
+  });
+
+  final bool isLoading;
+  final String? selectedImagePath;
+  final Function(String?) onUpdateProfile;
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       width: double.maxFinite,
       height: 50,
       child: ElevatedButton(
-        onPressed: isLoading ? null : () => _updateProfile(selectedImagePath),
+        onPressed: isLoading ? null : () => onUpdateProfile(selectedImagePath),
         style: ElevatedButton.styleFrom(
           backgroundColor: Theme.of(context).primaryColor,
           foregroundColor: Colors.white,
@@ -302,49 +508,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
       ),
     );
-  }
-
-  Profile _getCurrentProfile() {
-    return Profile.mockProfile();
-  }
-
-  String _formatDate(String? dateString) {
-    if (dateString == null) return '';
-    try {
-      final date = DateTime.parse(dateString);
-      return '${date.day}/${date.month}/${date.year}';
-    } catch (e) {
-      return dateString;
-    }
-  }
-
-  Future<void> _pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 80,
-    );
-
-    if (image != null) {
-      // Use BLoC instead of setState
-      _profileBloc.add(ProfileEvent.selectImage(imagePath: image.path));
-
-      if (mounted) {
-        context.showSnackBar(context.l10n.imageSelected);
-      }
-    }
-  }
-
-  void _updateProfile(String? selectedImagePath) {
-    if (_formKey.currentState?.validate() ?? false) {
-      final username = _usernameController.text.trim();
-
-      _profileBloc.add(
-        ProfileEvent.updateProfile(
-          username: username,
-          avatarUrl: selectedImagePath,
-        ),
-      );
-    }
   }
 }

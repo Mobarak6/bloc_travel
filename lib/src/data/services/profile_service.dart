@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:developer';
 import 'package:injectable/injectable.dart';
+import 'package:path/path.dart' as path;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:travel_app/src/data/models/profile_model.dart';
 
@@ -51,6 +53,31 @@ class ProfileService {
     return response;
   }
 
+  /// Update image in Supabase storage and return the public URL
+  Future<String> updateImage(File imageFile) async {
+    final currentUser = _supabase.auth.currentUser;
+    if (currentUser == null) {
+      throw Exception('User not authenticated');
+    }
+
+    final fileExt = path.extension(imageFile.path);
+    final fileName =
+        '${currentUser.id}/avatar${DateTime.now().millisecondsSinceEpoch}$fileExt';
+
+    final storageResponse = await _supabase.storage
+        .from('avatars')
+        .upload(
+          fileName,
+          imageFile,
+          fileOptions: const FileOptions(upsert: true),
+        );
+    log("storageResponse $storageResponse");
+
+    final imageUrl = _supabase.storage.from('avatars').getPublicUrl(fileName);
+
+    return imageUrl;
+  }
+
   /// Upload image to Supabase storage and return the public URL
   Future<String?> uploadImage({
     required String filePath,
@@ -63,13 +90,12 @@ class ProfileService {
     }
 
     // Generate unique filename if not provided
-    final uniqueFileName = fileName ?? 
+    final uniqueFileName =
+        fileName ??
         '${DateTime.now().millisecondsSinceEpoch}_${file.path.split('/').last}';
 
     // Upload file to storage
-    await _supabase.storage
-        .from(bucketName)
-        .upload(uniqueFileName, file);
+    await _supabase.storage.from(bucketName).upload(uniqueFileName, file);
 
     // Get public URL
     final publicUrl = _supabase.storage

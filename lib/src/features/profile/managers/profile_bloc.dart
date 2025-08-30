@@ -15,6 +15,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<_LoadProfile>(_onLoadProfile);
     on<_UpdateProfile>(_onUpdateProfile);
     on<_SelectImage>(_onSelectImage);
+    on<_UpdateImage>(_onUpdateImage);
   }
 
   final ProfileRepository profileRepository;
@@ -66,6 +67,29 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           selectedImagePath: event.imagePath,
         ),
       );
+    }
+  }
+
+  Future<void> _onUpdateImage(
+    _UpdateImage event,
+    Emitter<ProfileState> emit,
+  ) async {
+    emit(const ProfileState.updating());
+
+    final result = await profileRepository.updateImage(event.imagePath);
+
+    switch (result) {
+      case Ok<String>():
+        // After successful image upload, reload the profile to get updated data
+        final profileResult = await profileRepository.getProfile();
+        switch (profileResult) {
+          case Ok<Profile>():
+            emit(ProfileState.updated(profileResult.value));
+          case Error<Profile>():
+            emit(ProfileState.error(profileResult.error.toString()));
+        }
+      case Error<String>():
+        emit(ProfileState.error(result.error.toString()));
     }
   }
 }
