@@ -84,17 +84,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onPickImage: _pickImage,
                   onUpdateProfile: _updateProfile,
                   isLoading: false,
-                  selectedImagePath: null,
                 ),
                 updating: () => ProfileContentWidget(
-                  profile: _getCurrentProfile(),
+                  profile: Profile.mockProfile(),
                   usernameController: _usernameController,
                   usernameFocus: _usernameFocus,
                   formKey: _formKey,
                   onPickImage: _pickImage,
                   onUpdateProfile: _updateProfile,
                   isLoading: true,
-                  selectedImagePath: null,
                 ),
                 updated: (profile) => ProfileContentWidget(
                   profile: profile,
@@ -104,7 +102,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onPickImage: _pickImage,
                   onUpdateProfile: _updateProfile,
                   isLoading: false,
-                  selectedImagePath: null,
                 ),
                 imageSelected: (profile, selectedImagePath) =>
                     ProfileContentWidget(
@@ -128,10 +125,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
-  }
-
-  Profile _getCurrentProfile() {
-    return Profile.mockProfile();
   }
 
   Future<void> _pickImage() async {
@@ -168,7 +161,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
 
       if (image != null) {
-        // Use BLoC instead of setState
         _profileBloc.add(ProfileEvent.selectImage(imagePath: image.path));
 
         if (mounted) {
@@ -224,7 +216,6 @@ class ProfileContentWidget extends StatelessWidget {
       key: formKey,
       child: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: Dimensions.spacingLarge),
 

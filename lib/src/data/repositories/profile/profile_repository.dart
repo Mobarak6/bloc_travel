@@ -7,5 +7,5 @@ abstract class ProfileRepository {
     required String username,
     String? avatarUrl,
   });
-  Future<Result<String>> updateImage(String imagePath);
+  Future<Result<String>> uploadImage(String imagePath);
 }

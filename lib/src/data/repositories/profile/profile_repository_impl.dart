@@ -26,18 +26,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
     required String username,
     String? avatarUrl,
   }) async {
+
     try {
       String? uploadedAvatarUrl;
 
       // Handle image upload if a local file path is provided
-      if (avatarUrl != null && avatarUrl.startsWith('/')) {
-        uploadedAvatarUrl = await _profileService.uploadImage(
-          filePath: avatarUrl,
-          bucketName: 'avatars',
-          fileName: 'avatar_${DateTime.now().millisecondsSinceEpoch}.jpg',
-        );
-      } else if (avatarUrl != null) {
-        uploadedAvatarUrl = avatarUrl;
+      if (avatarUrl != null) {
+        final imageFile = File(avatarUrl);
+
+        uploadedAvatarUrl = await _profileService.uploadImage(imageFile);
+
       }
 
       final response = await _profileService.updateProfile(
@@ -53,14 +51,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Result<String>> updateImage(String imagePath) async {
+  Future<Result<String>> uploadImage(String imagePath) async {
     try {
       final imageFile = File(imagePath);
       if (!await imageFile.exists()) {
         throw Exception('Image file does not exist: $imagePath');
       }
 
-      final imageUrl = await _profileService.updateImage(imageFile);
+      final imageUrl = await _profileService.uploadImage(imageFile);
+
+
       return Result.ok(imageUrl);
     } on Exception catch (e) {
       return Result.error(e);

@@ -30,6 +30,7 @@ class ProfileService {
     required String username,
     String? avatarUrl,
   }) async {
+    print('-------here00000');
     final user = _supabase.auth.currentUser;
     if (user == null) {
       throw Exception('User not authenticated');
@@ -54,7 +55,8 @@ class ProfileService {
   }
 
   /// Update image in Supabase storage and return the public URL
-  Future<String> updateImage(File imageFile) async {
+  Future<String> uploadImage(File imageFile) async {
+
     final currentUser = _supabase.auth.currentUser;
     if (currentUser == null) {
       throw Exception('User not authenticated');
@@ -64,6 +66,7 @@ class ProfileService {
     final fileName =
         '${currentUser.id}/avatar${DateTime.now().millisecondsSinceEpoch}$fileExt';
 
+
     final storageResponse = await _supabase.storage
         .from('avatars')
         .upload(
@@ -71,6 +74,7 @@ class ProfileService {
           imageFile,
           fileOptions: const FileOptions(upsert: true),
         );
+
     log("storageResponse $storageResponse");
 
     final imageUrl = _supabase.storage.from('avatars').getPublicUrl(fileName);
@@ -78,30 +82,5 @@ class ProfileService {
     return imageUrl;
   }
 
-  /// Upload image to Supabase storage and return the public URL
-  Future<String?> uploadImage({
-    required String filePath,
-    required String bucketName,
-    String? fileName,
-  }) async {
-    final file = File(filePath);
-    if (!await file.exists()) {
-      throw Exception('File does not exist: $filePath');
-    }
 
-    // Generate unique filename if not provided
-    final uniqueFileName =
-        fileName ??
-        '${DateTime.now().millisecondsSinceEpoch}_${file.path.split('/').last}';
-
-    // Upload file to storage
-    await _supabase.storage.from(bucketName).upload(uniqueFileName, file);
-
-    // Get public URL
-    final publicUrl = _supabase.storage
-        .from(bucketName)
-        .getPublicUrl(uniqueFileName);
-
-    return publicUrl;
-  }
 }

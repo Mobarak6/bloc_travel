@@ -76,12 +76,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ) async {
     emit(const ProfileState.updating());
 
-    final result = await profileRepository.updateImage(event.imagePath);
+    final result = await profileRepository.uploadImage(event.imagePath);
 
     switch (result) {
       case Ok<String>():
-        // After successful image upload, reload the profile to get updated data
-        final profileResult = await profileRepository.getProfile();
+        // After successful image upload, update profile
+        final profileResult = await profileRepository.updateProfile(username: result.value);
         switch (profileResult) {
           case Ok<Profile>():
             emit(ProfileState.updated(profileResult.value));
