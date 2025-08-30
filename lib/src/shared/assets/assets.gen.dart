@@ -41,6 +41,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
+  /// File path: assets/images/place_holder.png
+  AssetGenImage get placeHolder =>
+      const AssetGenImage('assets/images/place_holder.png');
+
   /// File path: assets/images/profile_place_holder.png
   AssetGenImage get profilePlaceHolder =>
       const AssetGenImage('assets/images/profile_place_holder.png');
@@ -50,7 +54,12 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/splash_image.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [logo, profilePlaceHolder, splashImage];
+  List<AssetGenImage> get values => [
+    logo,
+    placeHolder,
+    profilePlaceHolder,
+    splashImage,
+  ];
 }
 
 class Assets {

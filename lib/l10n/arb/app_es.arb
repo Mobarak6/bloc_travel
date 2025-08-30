@@ -34,5 +34,18 @@
     "selectUserType": "Selecciona tu tipo de usuario",
     "user": "Usuario",
     "admin": "Administrador",
-    "pleaseSelectUserType": "Por favor selecciona un tipo de usuario"
+    "pleaseSelectUserType": "Por favor selecciona un tipo de usuario",
+    "profile": "Perfil",
+    "updateProfile": "Actualizar Perfil",
+    "profileInformation": "Información del Perfil",
+    "username": "Nombre de Usuario",
+    "enterUsername": "Ingresa nombre de usuario",
+    "pleaseEnterUsername": "Por favor ingresa nombre de usuario",
+    "role": "Rol",
+    "createdAt": "Creado El",
+    "tapToChangeAvatar": "Toca para cambiar avatar",
+    "loadingProfile": "Cargando perfil...",
+    "retry": "Reintentar",
+    "imageSelected": "Imagen seleccionada. La funcionalidad de carga se implementará.",
+    "profileUpdated": "¡Perfil actualizado exitosamente!"
 }

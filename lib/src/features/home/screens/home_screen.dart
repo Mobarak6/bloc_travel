@@ -17,29 +17,36 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title:context.l10n.home),
+      appBar: CustomAppBar(title: context.l10n.home),
       body: Center(
-        child: Column(children: [
+        child: Column(
+          children: [
+            ElevatedButton.icon(
+              onPressed: () {
+                context.pushRoute(const LoginRoute());
+              },
+              label: Text(context.l10n.login),
+            ),
+            const SizedBox(height: Dimensions.fontSizeDefault),
 
-          ElevatedButton.icon(
-            onPressed: (){
-              context.pushRoute(const LoginRoute());
-            },
-            label: Text(context.l10n.login),
-          ),
-          const SizedBox(height: Dimensions.fontSizeDefault),
+            ElevatedButton.icon(
+              onPressed: () {
+                context.pushRoute(const RegistrationRoute());
+              },
+              label: Text(context.l10n.registration),
+            ),
+            const SizedBox(height: Dimensions.fontSizeDefault),
 
-          ElevatedButton.icon(
-            onPressed: (){
-              context.pushRoute(const RegistrationRoute());
-
-            },
-            label: Text(context.l10n.registration),
-          ),
-
-        ]),
+            ElevatedButton.icon(
+              onPressed: () {
+                context.pushRoute(const ProfileRoute());
+              },
+              icon: const Icon(Icons.person),
+              label: const Text('Profile'),
+            ),
+          ],
+        ),
       ),
-
     );
   }
 }

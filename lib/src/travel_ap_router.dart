@@ -3,7 +3,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:travel_app/src/travel_ap_router.gr.dart';
 
-
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class TravelAppRouter extends RootStackRouter {
   TravelAppRouter({
@@ -23,7 +22,7 @@ class TravelAppRouter extends RootStackRouter {
       page: SplashRoute.page,
       guards: [
         AuthGuard(supabaseClient),
-      ]
+      ],
     ),
     AutoRoute(
       path: '/home',
@@ -39,18 +38,20 @@ class TravelAppRouter extends RootStackRouter {
       path: '/registration',
       page: RegistrationRoute.page,
     ),
+    AutoRoute(
+      path: '/profile',
+      page: ProfileRoute.page,
+    ),
   ];
 
   @override
-  RouteType get defaultRouteType =>  RouteType.custom(
+  RouteType get defaultRouteType => RouteType.custom(
     transitionsBuilder: TransitionsBuilders.fadeIn,
     duration: const Duration(milliseconds: 200),
   );
 }
 
-
 class AuthGuard extends AutoRouteGuard {
-
   AuthGuard(this.supabase);
   final SupabaseClient supabase;
 

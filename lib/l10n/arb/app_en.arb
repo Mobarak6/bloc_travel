@@ -38,6 +38,18 @@
     "selectUserType": "Select your user type",
     "user": "User",
     "admin": "Admin",
-    "pleaseSelectUserType": "Please select a user type"
-
+    "pleaseSelectUserType": "Please select a user type",
+    "profile": "Profile",
+    "updateProfile": "Update Profile",
+    "profileInformation": "Profile Information",
+    "username": "Username",
+    "enterUsername": "Enter username",
+    "pleaseEnterUsername": "Please enter username",
+    "role": "Role",
+    "createdAt": "Created At",
+    "tapToChangeAvatar": "Tap to change avatar",
+    "loadingProfile": "Loading profile...",
+    "retry": "Retry",
+    "imageSelected": "Image selected. Upload functionality will be implemented.",
+    "profileUpdated": "Profile updated successfully!"
 }

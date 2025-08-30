@@ -17,12 +17,8 @@ class _TravelAppState extends State<TravelApp> {
   late TravelAppRouter _appRouter;
   late final SupabaseClient _supabaseClient;
 
-
-
-
   @override
   void initState() {
-
     _supabaseClient = getIt<SupabaseClient>();
 
     _appRouter = TravelAppRouter(
@@ -51,5 +47,4 @@ class _TravelAppState extends State<TravelApp> {
       ),
     );
   }
-
 }
