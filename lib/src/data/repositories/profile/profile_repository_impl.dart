@@ -1,27 +1,18 @@
 import 'package:injectable/injectable.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:travel_app/src/data/models/profile_model.dart';
 import 'package:travel_app/src/data/repositories/profile/profile_repository.dart';
+import 'package:travel_app/src/data/services/profile_service.dart';
 import 'package:travel_app/src/shared/utils/result.dart';
 
 @LazySingleton(as: ProfileRepository)
 class ProfileRepositoryImpl implements ProfileRepository {
-  final SupabaseClient _supabase = Supabase.instance.client;
+  ProfileRepositoryImpl(this._profileService);
+  final ProfileService _profileService;
 
   @override
   Future<Result<Profile>> getProfile() async {
     try {
-      final user = _supabase.auth.currentUser;
-      if (user == null) {
-        return Result.error(Exception('User not authenticated'));
-      }
-
-      final response = await _supabase
-          .from('profiles')
-          .select()
-          .eq('id', user.id)
-          .single();
-
+      final response = await _profileService.getProfile();
       final profile = Profile.fromJson(response);
       return Result.ok(profile);
     } on Exception catch (e) {
@@ -35,25 +26,23 @@ class ProfileRepositoryImpl implements ProfileRepository {
     String? avatarUrl,
   }) async {
     try {
-      final user = _supabase.auth.currentUser;
-      if (user == null) {
-        return Result.error(Exception('User not authenticated'));
+      String? uploadedAvatarUrl;
+
+      // Handle image upload if a local file path is provided
+      if (avatarUrl != null && avatarUrl.startsWith('/')) {
+        uploadedAvatarUrl = await _profileService.uploadImage(
+          filePath: avatarUrl,
+          bucketName: 'avatars',
+          fileName: 'avatar_${DateTime.now().millisecondsSinceEpoch}.jpg',
+        );
+      } else if (avatarUrl != null) {
+        uploadedAvatarUrl = avatarUrl;
       }
 
-      final updateData = <String, dynamic>{
-        'username': username,
-      };
-
-      if (avatarUrl != null) {
-        updateData['avatar_url'] = avatarUrl;
-      }
-
-      final response = await _supabase
-          .from('profiles')
-          .update(updateData)
-          .eq('id', user.id)
-          .select()
-          .single();
+      final response = await _profileService.updateProfile(
+        username: username,
+        avatarUrl: uploadedAvatarUrl,
+      );
 
       final profile = Profile.fromJson(response);
       return Result.ok(profile);

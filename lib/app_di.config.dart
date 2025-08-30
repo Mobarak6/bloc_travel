@@ -21,6 +21,7 @@ import 'src/data/repositories/auth/auth_repository_impl.dart' as _i472;
 import 'src/data/repositories/profile/profile_repository.dart' as _i341;
 import 'src/data/repositories/profile/profile_repository_impl.dart' as _i828;
 import 'src/data/services/auth_service.dart' as _i123;
+import 'src/data/services/profile_service.dart' as _i11;
 import 'src/features/auth/managers/auth_bloc.dart' as _i548;
 import 'src/features/profile/managers/profile_bloc.dart' as _i500;
 
@@ -41,8 +42,9 @@ Future<_i174.GetIt> $initGetIt(
   );
   gh.lazySingleton<_i361.Dio>(() => appDependenciesModule.dio);
   gh.lazySingleton<_i123.AuthService>(() => _i123.AuthService());
+  gh.lazySingleton<_i11.ProfileService>(() => _i11.ProfileService());
   gh.lazySingleton<_i341.ProfileRepository>(
-    () => _i828.ProfileRepositoryImpl(),
+    () => _i828.ProfileRepositoryImpl(gh<_i11.ProfileService>()),
   );
   gh.lazySingleton<_i313.AuthRepository>(
     () => _i472.AuthRepositoryImpl(gh<_i123.AuthService>()),

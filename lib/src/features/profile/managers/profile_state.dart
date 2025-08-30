@@ -6,5 +6,10 @@ class ProfileState with _$ProfileState {
   const factory ProfileState.loading() = _Loading;
   const factory ProfileState.loaded(Profile profile) = _Loaded;
   const factory ProfileState.updating() = _Updating;
+  const factory ProfileState.updated(Profile profile) = _Updated;
+  const factory ProfileState.imageSelected({
+    required Profile profile,
+    required String selectedImagePath,
+  }) = _ImageSelected;
   const factory ProfileState.error(String message) = _Error;
 }

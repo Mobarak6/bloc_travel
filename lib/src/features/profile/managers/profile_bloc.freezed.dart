@@ -55,12 +55,13 @@ extension ProfileEventPatterns on ProfileEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _LoadProfile value)?  loadProfile,TResult Function( _UpdateProfile value)?  updateProfile,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _LoadProfile value)?  loadProfile,TResult Function( _UpdateProfile value)?  updateProfile,TResult Function( _SelectImage value)?  selectImage,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _LoadProfile() when loadProfile != null:
 return loadProfile(_that);case _UpdateProfile() when updateProfile != null:
-return updateProfile(_that);case _:
+return updateProfile(_that);case _SelectImage() when selectImage != null:
+return selectImage(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return updateProfile(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _LoadProfile value)  loadProfile,required TResult Function( _UpdateProfile value)  updateProfile,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _LoadProfile value)  loadProfile,required TResult Function( _UpdateProfile value)  updateProfile,required TResult Function( _SelectImage value)  selectImage,}){
 final _that = this;
 switch (_that) {
 case _LoadProfile():
 return loadProfile(_that);case _UpdateProfile():
-return updateProfile(_that);case _:
+return updateProfile(_that);case _SelectImage():
+return selectImage(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return updateProfile(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _LoadProfile value)?  loadProfile,TResult? Function( _UpdateProfile value)?  updateProfile,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _LoadProfile value)?  loadProfile,TResult? Function( _UpdateProfile value)?  updateProfile,TResult? Function( _SelectImage value)?  selectImage,}){
 final _that = this;
 switch (_that) {
 case _LoadProfile() when loadProfile != null:
 return loadProfile(_that);case _UpdateProfile() when updateProfile != null:
-return updateProfile(_that);case _:
+return updateProfile(_that);case _SelectImage() when selectImage != null:
+return selectImage(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return updateProfile(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadProfile,TResult Function( String username,  String? avatarUrl)?  updateProfile,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadProfile,TResult Function( String username,  String? avatarUrl)?  updateProfile,TResult Function( String imagePath)?  selectImage,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LoadProfile() when loadProfile != null:
 return loadProfile();case _UpdateProfile() when updateProfile != null:
-return updateProfile(_that.username,_that.avatarUrl);case _:
+return updateProfile(_that.username,_that.avatarUrl);case _SelectImage() when selectImage != null:
+return selectImage(_that.imagePath);case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return updateProfile(_that.username,_that.avatarUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadProfile,required TResult Function( String username,  String? avatarUrl)  updateProfile,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadProfile,required TResult Function( String username,  String? avatarUrl)  updateProfile,required TResult Function( String imagePath)  selectImage,}) {final _that = this;
 switch (_that) {
 case _LoadProfile():
 return loadProfile();case _UpdateProfile():
-return updateProfile(_that.username,_that.avatarUrl);case _:
+return updateProfile(_that.username,_that.avatarUrl);case _SelectImage():
+return selectImage(_that.imagePath);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return updateProfile(_that.username,_that.avatarUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadProfile,TResult? Function( String username,  String? avatarUrl)?  updateProfile,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadProfile,TResult? Function( String username,  String? avatarUrl)?  updateProfile,TResult? Function( String imagePath)?  selectImage,}) {final _that = this;
 switch (_that) {
 case _LoadProfile() when loadProfile != null:
 return loadProfile();case _UpdateProfile() when updateProfile != null:
-return updateProfile(_that.username,_that.avatarUrl);case _:
+return updateProfile(_that.username,_that.avatarUrl);case _SelectImage() when selectImage != null:
+return selectImage(_that.imagePath);case _:
   return null;
 
 }
@@ -278,6 +284,72 @@ as String?,
 }
 
 /// @nodoc
+
+
+class _SelectImage implements ProfileEvent {
+  const _SelectImage({required this.imagePath});
+  
+
+ final  String imagePath;
+
+/// Create a copy of ProfileEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SelectImageCopyWith<_SelectImage> get copyWith => __$SelectImageCopyWithImpl<_SelectImage>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SelectImage&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,imagePath);
+
+@override
+String toString() {
+  return 'ProfileEvent.selectImage(imagePath: $imagePath)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SelectImageCopyWith<$Res> implements $ProfileEventCopyWith<$Res> {
+  factory _$SelectImageCopyWith(_SelectImage value, $Res Function(_SelectImage) _then) = __$SelectImageCopyWithImpl;
+@useResult
+$Res call({
+ String imagePath
+});
+
+
+
+
+}
+/// @nodoc
+class __$SelectImageCopyWithImpl<$Res>
+    implements _$SelectImageCopyWith<$Res> {
+  __$SelectImageCopyWithImpl(this._self, this._then);
+
+  final _SelectImage _self;
+  final $Res Function(_SelectImage) _then;
+
+/// Create a copy of ProfileEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? imagePath = null,}) {
+  return _then(_SelectImage(
+imagePath: null == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$ProfileState {
 
 
@@ -321,14 +393,16 @@ extension ProfileStatePatterns on ProfileState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Updating value)?  updating,TResult Function( _Error value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Updating value)?  updating,TResult Function( _Updated value)?  updated,TResult Function( _ImageSelected value)?  imageSelected,TResult Function( _Error value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Loading() when loading != null:
 return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _Updating() when updating != null:
-return updating(_that);case _Error() when error != null:
+return updating(_that);case _Updated() when updated != null:
+return updated(_that);case _ImageSelected() when imageSelected != null:
+return imageSelected(_that);case _Error() when error != null:
 return error(_that);case _:
   return orElse();
 
@@ -347,14 +421,16 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Updating value)  updating,required TResult Function( _Error value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Updating value)  updating,required TResult Function( _Updated value)  updated,required TResult Function( _ImageSelected value)  imageSelected,required TResult Function( _Error value)  error,}){
 final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that);case _Loading():
 return loading(_that);case _Loaded():
 return loaded(_that);case _Updating():
-return updating(_that);case _Error():
+return updating(_that);case _Updated():
+return updated(_that);case _ImageSelected():
+return imageSelected(_that);case _Error():
 return error(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -372,14 +448,16 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Updating value)?  updating,TResult? Function( _Error value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Updating value)?  updating,TResult? Function( _Updated value)?  updated,TResult? Function( _ImageSelected value)?  imageSelected,TResult? Function( _Error value)?  error,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Loading() when loading != null:
 return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _Updating() when updating != null:
-return updating(_that);case _Error() when error != null:
+return updating(_that);case _Updated() when updated != null:
+return updated(_that);case _ImageSelected() when imageSelected != null:
+return imageSelected(_that);case _Error() when error != null:
 return error(_that);case _:
   return null;
 
@@ -397,13 +475,15 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Profile profile)?  loaded,TResult Function()?  updating,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Profile profile)?  loaded,TResult Function()?  updating,TResult Function( Profile profile)?  updated,TResult Function( Profile profile,  String selectedImagePath)?  imageSelected,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Loaded() when loaded != null:
 return loaded(_that.profile);case _Updating() when updating != null:
-return updating();case _Error() when error != null:
+return updating();case _Updated() when updated != null:
+return updated(_that.profile);case _ImageSelected() when imageSelected != null:
+return imageSelected(_that.profile,_that.selectedImagePath);case _Error() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -422,13 +502,15 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Profile profile)  loaded,required TResult Function()  updating,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Profile profile)  loaded,required TResult Function()  updating,required TResult Function( Profile profile)  updated,required TResult Function( Profile profile,  String selectedImagePath)  imageSelected,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
 return loading();case _Loaded():
 return loaded(_that.profile);case _Updating():
-return updating();case _Error():
+return updating();case _Updated():
+return updated(_that.profile);case _ImageSelected():
+return imageSelected(_that.profile,_that.selectedImagePath);case _Error():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -446,13 +528,15 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Profile profile)?  loaded,TResult? Function()?  updating,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Profile profile)?  loaded,TResult? Function()?  updating,TResult? Function( Profile profile)?  updated,TResult? Function( Profile profile,  String selectedImagePath)?  imageSelected,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Loaded() when loaded != null:
 return loaded(_that.profile);case _Updating() when updating != null:
-return updating();case _Error() when error != null:
+return updating();case _Updated() when updated != null:
+return updated(_that.profile);case _ImageSelected() when imageSelected != null:
+return imageSelected(_that.profile,_that.selectedImagePath);case _Error() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -631,6 +715,158 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _Updated implements ProfileState {
+  const _Updated(this.profile);
+  
+
+ final  Profile profile;
+
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UpdatedCopyWith<_Updated> get copyWith => __$UpdatedCopyWithImpl<_Updated>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Updated&&(identical(other.profile, profile) || other.profile == profile));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,profile);
+
+@override
+String toString() {
+  return 'ProfileState.updated(profile: $profile)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$UpdatedCopyWith<$Res> implements $ProfileStateCopyWith<$Res> {
+  factory _$UpdatedCopyWith(_Updated value, $Res Function(_Updated) _then) = __$UpdatedCopyWithImpl;
+@useResult
+$Res call({
+ Profile profile
+});
+
+
+$ProfileCopyWith<$Res> get profile;
+
+}
+/// @nodoc
+class __$UpdatedCopyWithImpl<$Res>
+    implements _$UpdatedCopyWith<$Res> {
+  __$UpdatedCopyWithImpl(this._self, this._then);
+
+  final _Updated _self;
+  final $Res Function(_Updated) _then;
+
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? profile = null,}) {
+  return _then(_Updated(
+null == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+as Profile,
+  ));
+}
+
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ProfileCopyWith<$Res> get profile {
+  
+  return $ProfileCopyWith<$Res>(_self.profile, (value) {
+    return _then(_self.copyWith(profile: value));
+  });
+}
+}
+
+/// @nodoc
+
+
+class _ImageSelected implements ProfileState {
+  const _ImageSelected({required this.profile, required this.selectedImagePath});
+  
+
+ final  Profile profile;
+ final  String selectedImagePath;
+
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ImageSelectedCopyWith<_ImageSelected> get copyWith => __$ImageSelectedCopyWithImpl<_ImageSelected>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ImageSelected&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.selectedImagePath, selectedImagePath) || other.selectedImagePath == selectedImagePath));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,profile,selectedImagePath);
+
+@override
+String toString() {
+  return 'ProfileState.imageSelected(profile: $profile, selectedImagePath: $selectedImagePath)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ImageSelectedCopyWith<$Res> implements $ProfileStateCopyWith<$Res> {
+  factory _$ImageSelectedCopyWith(_ImageSelected value, $Res Function(_ImageSelected) _then) = __$ImageSelectedCopyWithImpl;
+@useResult
+$Res call({
+ Profile profile, String selectedImagePath
+});
+
+
+$ProfileCopyWith<$Res> get profile;
+
+}
+/// @nodoc
+class __$ImageSelectedCopyWithImpl<$Res>
+    implements _$ImageSelectedCopyWith<$Res> {
+  __$ImageSelectedCopyWithImpl(this._self, this._then);
+
+  final _ImageSelected _self;
+  final $Res Function(_ImageSelected) _then;
+
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? profile = null,Object? selectedImagePath = null,}) {
+  return _then(_ImageSelected(
+profile: null == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+as Profile,selectedImagePath: null == selectedImagePath ? _self.selectedImagePath : selectedImagePath // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ProfileCopyWith<$Res> get profile {
+  
+  return $ProfileCopyWith<$Res>(_self.profile, (value) {
+    return _then(_self.copyWith(profile: value));
+  });
+}
+}
 
 /// @nodoc
 

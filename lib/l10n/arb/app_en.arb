@@ -51,5 +51,9 @@
     "loadingProfile": "Loading profile...",
     "retry": "Retry",
     "imageSelected": "Image selected. Upload functionality will be implemented.",
-    "profileUpdated": "Profile updated successfully!"
+    "profileUpdated": "Profile updated successfully!",
+    "manageYourProfileInformation": "Manage your profile information",
+    "personalInformation": "Personal Information",
+    "tapToChangePhoto": "Tap to change photo",
+    "memberSince": "Member Since"
 }
