@@ -1,4 +1,3 @@
-/// Utility class to wrap result data.
 sealed class Result<T> {
   const Result();
 
@@ -23,16 +22,4 @@ final class Error<T> extends Result<T> {
 
   @override
   String toString() => 'Result<$T>.error($error)';
-}
-
-enum AppExceptionType { accountNotExists, accountExists, general }
-
-final class AppException implements Exception {
-  const AppException([this.message, this.type = AppExceptionType.general]);
-
-  final String? message;
-  final AppExceptionType type;
-
-  @override
-  String toString() => message ?? 'Error found!';
 }
