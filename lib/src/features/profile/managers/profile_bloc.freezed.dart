@@ -55,14 +55,13 @@ extension ProfileEventPatterns on ProfileEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _LoadProfile value)?  loadProfile,TResult Function( _UpdateProfile value)?  updateProfile,TResult Function( _SelectImage value)?  selectImage,TResult Function( _UpdateImage value)?  updateImage,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _LoadProfile value)?  loadProfile,TResult Function( _UpdateProfile value)?  updateProfile,TResult Function( _SelectImage value)?  selectImage,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _LoadProfile() when loadProfile != null:
 return loadProfile(_that);case _UpdateProfile() when updateProfile != null:
 return updateProfile(_that);case _SelectImage() when selectImage != null:
-return selectImage(_that);case _UpdateImage() when updateImage != null:
-return updateImage(_that);case _:
+return selectImage(_that);case _:
   return orElse();
 
 }
@@ -80,14 +79,13 @@ return updateImage(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _LoadProfile value)  loadProfile,required TResult Function( _UpdateProfile value)  updateProfile,required TResult Function( _SelectImage value)  selectImage,required TResult Function( _UpdateImage value)  updateImage,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _LoadProfile value)  loadProfile,required TResult Function( _UpdateProfile value)  updateProfile,required TResult Function( _SelectImage value)  selectImage,}){
 final _that = this;
 switch (_that) {
 case _LoadProfile():
 return loadProfile(_that);case _UpdateProfile():
 return updateProfile(_that);case _SelectImage():
-return selectImage(_that);case _UpdateImage():
-return updateImage(_that);case _:
+return selectImage(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -104,14 +102,13 @@ return updateImage(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _LoadProfile value)?  loadProfile,TResult? Function( _UpdateProfile value)?  updateProfile,TResult? Function( _SelectImage value)?  selectImage,TResult? Function( _UpdateImage value)?  updateImage,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _LoadProfile value)?  loadProfile,TResult? Function( _UpdateProfile value)?  updateProfile,TResult? Function( _SelectImage value)?  selectImage,}){
 final _that = this;
 switch (_that) {
 case _LoadProfile() when loadProfile != null:
 return loadProfile(_that);case _UpdateProfile() when updateProfile != null:
 return updateProfile(_that);case _SelectImage() when selectImage != null:
-return selectImage(_that);case _UpdateImage() when updateImage != null:
-return updateImage(_that);case _:
+return selectImage(_that);case _:
   return null;
 
 }
@@ -128,13 +125,12 @@ return updateImage(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadProfile,TResult Function( String username,  String? avatarUrl)?  updateProfile,TResult Function( String imagePath)?  selectImage,TResult Function( String imagePath)?  updateImage,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadProfile,TResult Function( String username,  String? avatarUrl)?  updateProfile,TResult Function( String imagePath)?  selectImage,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LoadProfile() when loadProfile != null:
 return loadProfile();case _UpdateProfile() when updateProfile != null:
 return updateProfile(_that.username,_that.avatarUrl);case _SelectImage() when selectImage != null:
-return selectImage(_that.imagePath);case _UpdateImage() when updateImage != null:
-return updateImage(_that.imagePath);case _:
+return selectImage(_that.imagePath);case _:
   return orElse();
 
 }
@@ -152,13 +148,12 @@ return updateImage(_that.imagePath);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadProfile,required TResult Function( String username,  String? avatarUrl)  updateProfile,required TResult Function( String imagePath)  selectImage,required TResult Function( String imagePath)  updateImage,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadProfile,required TResult Function( String username,  String? avatarUrl)  updateProfile,required TResult Function( String imagePath)  selectImage,}) {final _that = this;
 switch (_that) {
 case _LoadProfile():
 return loadProfile();case _UpdateProfile():
 return updateProfile(_that.username,_that.avatarUrl);case _SelectImage():
-return selectImage(_that.imagePath);case _UpdateImage():
-return updateImage(_that.imagePath);case _:
+return selectImage(_that.imagePath);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -175,13 +170,12 @@ return updateImage(_that.imagePath);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadProfile,TResult? Function( String username,  String? avatarUrl)?  updateProfile,TResult? Function( String imagePath)?  selectImage,TResult? Function( String imagePath)?  updateImage,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadProfile,TResult? Function( String username,  String? avatarUrl)?  updateProfile,TResult? Function( String imagePath)?  selectImage,}) {final _that = this;
 switch (_that) {
 case _LoadProfile() when loadProfile != null:
 return loadProfile();case _UpdateProfile() when updateProfile != null:
 return updateProfile(_that.username,_that.avatarUrl);case _SelectImage() when selectImage != null:
-return selectImage(_that.imagePath);case _UpdateImage() when updateImage != null:
-return updateImage(_that.imagePath);case _:
+return selectImage(_that.imagePath);case _:
   return null;
 
 }
@@ -347,72 +341,6 @@ class __$SelectImageCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? imagePath = null,}) {
   return _then(_SelectImage(
-imagePath: null == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class _UpdateImage implements ProfileEvent {
-  const _UpdateImage({required this.imagePath});
-  
-
- final  String imagePath;
-
-/// Create a copy of ProfileEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$UpdateImageCopyWith<_UpdateImage> get copyWith => __$UpdateImageCopyWithImpl<_UpdateImage>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateImage&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,imagePath);
-
-@override
-String toString() {
-  return 'ProfileEvent.updateImage(imagePath: $imagePath)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$UpdateImageCopyWith<$Res> implements $ProfileEventCopyWith<$Res> {
-  factory _$UpdateImageCopyWith(_UpdateImage value, $Res Function(_UpdateImage) _then) = __$UpdateImageCopyWithImpl;
-@useResult
-$Res call({
- String imagePath
-});
-
-
-
-
-}
-/// @nodoc
-class __$UpdateImageCopyWithImpl<$Res>
-    implements _$UpdateImageCopyWith<$Res> {
-  __$UpdateImageCopyWithImpl(this._self, this._then);
-
-  final _UpdateImage _self;
-  final $Res Function(_UpdateImage) _then;
-
-/// Create a copy of ProfileEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? imagePath = null,}) {
-  return _then(_UpdateImage(
 imagePath: null == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
 as String,
   ));

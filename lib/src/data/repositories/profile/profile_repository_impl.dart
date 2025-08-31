@@ -45,25 +45,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
       final profile = Profile.fromJson(response);
       return Result.ok(profile);
+
     } on Exception catch (e) {
       return Result.error(e);
     }
   }
 
-  @override
-  Future<Result<String>> uploadImage(String imagePath) async {
-    try {
-      final imageFile = File(imagePath);
-      if (!await imageFile.exists()) {
-        throw Exception('Image file does not exist: $imagePath');
-      }
-
-      final imageUrl = await _profileService.uploadImage(imageFile);
-
-
-      return Result.ok(imageUrl);
-    } on Exception catch (e) {
-      return Result.error(e);
-    }
-  }
 }

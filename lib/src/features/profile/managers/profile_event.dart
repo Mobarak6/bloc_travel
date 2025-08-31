@@ -13,7 +13,4 @@ abstract class ProfileEvent with _$ProfileEvent {
     required String imagePath,
   }) = _SelectImage;
 
-  const factory ProfileEvent.updateImage({
-    required String imagePath,
-  }) = _UpdateImage;
 }
