@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel_app/src/data/models/profile_model.dart';
+import 'package:travel_app/src/data/repositories/profile/profile_repository.dart';
+import 'package:travel_app/src/shared/utils/result.dart';
 
 part 'profile_ops_event.dart';
 part 'profile_ops_state.dart';
@@ -9,9 +11,12 @@ part 'profile_ops_bloc.freezed.dart';
 
 @injectable
 class ProfileOpsBloc extends Bloc<ProfileOpsEvent, ProfileOpsState> {
-  ProfileOpsBloc() : super(const ProfileOpsState.initial()) {
+  ProfileOpsBloc(this.profileRepository) : super(const ProfileOpsState.initial()) {
     on<_SelectImage>(_onSelectImage);
+    on<_UpdateProfile>(_onUpdateProfile);
   }
+
+  final ProfileRepository profileRepository;
 
   void _onSelectImage(
     _SelectImage event,
@@ -19,10 +24,29 @@ class ProfileOpsBloc extends Bloc<ProfileOpsEvent, ProfileOpsState> {
   ) {
     emit(
       ProfileOpsState.imageSelected(
-        profile: event.profile,
         selectedImagePath: event.imagePath,
       ),
     );
+  }
+
+  Future<void> _onUpdateProfile(
+      _UpdateProfile event,
+      Emitter<ProfileOpsState> emit,
+      ) async {
+    emit(const ProfileOpsState.updating());
+
+    final result = await profileRepository.updateProfile(
+      username: event.username,
+      avatarUrl: event.avatarUrl,
+    );
+
+    switch (result) {
+      case Ok<Profile>():
+        emit(ProfileOpsState.updated(result.value));
+
+      case Error<Profile>():
+        emit(ProfileOpsState.error(result.error.toString()));
+    }
   }
 
 }

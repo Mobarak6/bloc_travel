@@ -38,7 +38,6 @@ Future<_i174.GetIt> $initGetIt(
     () => appDependenciesModule.prefs,
     preResolve: true,
   );
-  gh.factory<_i656.ProfileOpsBloc>(() => _i656.ProfileOpsBloc());
   gh.lazySingleton<_i454.SupabaseClient>(
     () => appDependenciesModule.supabaseClient,
   );
@@ -53,6 +52,9 @@ Future<_i174.GetIt> $initGetIt(
   );
   gh.factory<_i500.ProfileBloc>(
     () => _i500.ProfileBloc(gh<_i341.ProfileRepository>()),
+  );
+  gh.factory<_i656.ProfileOpsBloc>(
+    () => _i656.ProfileOpsBloc(gh<_i341.ProfileRepository>()),
   );
   gh.factory<_i548.AuthBloc>(() => _i548.AuthBloc(gh<_i313.AuthRepository>()));
   return getIt;

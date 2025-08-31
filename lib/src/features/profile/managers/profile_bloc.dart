@@ -13,7 +13,6 @@ part 'profile_bloc.freezed.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc(this.profileRepository) : super(const ProfileState.initial()) {
     on<_LoadProfile>(_onLoadProfile);
-    on<_UpdateProfile>(_onUpdateProfile);
   }
 
   final ProfileRepository profileRepository;
@@ -29,27 +28,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     switch (result) {
       case Ok<Profile>():
         emit(ProfileState.loaded(result.value));
+
       case Error<Profile>():
         emit(ProfileState.error(result.error.toString()));
     }
   }
 
-  Future<void> _onUpdateProfile(
-    _UpdateProfile event,
-    Emitter<ProfileState> emit,
-  ) async {
-    emit(const ProfileState.updating());
 
-    final result = await profileRepository.updateProfile(
-      username: event.username,
-      avatarUrl: event.avatarUrl,
-    );
-
-    switch (result) {
-      case Ok<Profile>():
-        emit(ProfileState.updated(result.value));
-      case Error<Profile>():
-        emit(ProfileState.error(result.error.toString()));
-    }
-  }
 }
