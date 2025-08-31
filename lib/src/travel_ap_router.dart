@@ -42,6 +42,17 @@ class TravelAppRouter extends RootStackRouter {
       path: '/profile',
       page: ProfileRoute.page,
     ),
+
+    AutoRoute(
+      path: '/trip-list',
+      page: TripListRoute.page,
+    ),
+
+    AutoRoute(
+      path: '/trip-create',
+      page: CreateTripRoute.page,
+    ),
+
   ];
 
   @override
