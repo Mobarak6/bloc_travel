@@ -24,6 +24,7 @@ import 'src/data/services/auth_service.dart' as _i123;
 import 'src/data/services/profile_service.dart' as _i11;
 import 'src/features/auth/managers/auth_bloc.dart' as _i548;
 import 'src/features/profile/managers/profile_bloc.dart' as _i500;
+import 'src/features/profile/managers/profile_ops_bloc.dart' as _i656;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 Future<_i174.GetIt> $initGetIt(
@@ -37,6 +38,7 @@ Future<_i174.GetIt> $initGetIt(
     () => appDependenciesModule.prefs,
     preResolve: true,
   );
+  gh.factory<_i656.ProfileOpsBloc>(() => _i656.ProfileOpsBloc());
   gh.lazySingleton<_i454.SupabaseClient>(
     () => appDependenciesModule.supabaseClient,
   );

@@ -14,7 +14,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc(this.profileRepository) : super(const ProfileState.initial()) {
     on<_LoadProfile>(_onLoadProfile);
     on<_UpdateProfile>(_onUpdateProfile);
-    on<_SelectImage>(_onSelectImage);
   }
 
   final ProfileRepository profileRepository;
@@ -53,20 +52,4 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(ProfileState.error(result.error.toString()));
     }
   }
-
-  void _onSelectImage(
-    _SelectImage event,
-    Emitter<ProfileState> emit,
-  ) {
-    final currentState = state;
-    if (currentState is _Loaded) {
-      emit(
-        ProfileState.imageSelected(
-          profile: currentState.profile,
-          selectedImagePath: event.imagePath,
-        ),
-      );
-    }
-  }
-
 }

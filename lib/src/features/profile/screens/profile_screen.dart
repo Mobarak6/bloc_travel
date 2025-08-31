@@ -6,6 +6,7 @@ import 'package:travel_app/app_di.dart';
 import 'package:travel_app/l10n/l10n.dart';
 import 'package:travel_app/src/data/models/profile_model.dart';
 import 'package:travel_app/src/features/profile/managers/profile_bloc.dart';
+import 'package:travel_app/src/features/profile/managers/profile_ops_bloc.dart';
 
 import 'package:travel_app/src/features/profile/widgets/profile_error_widget.dart';
 import 'package:travel_app/src/features/profile/widgets/profile_loading_widget.dart';
@@ -32,11 +33,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late ProfileBloc _profileBloc;
+  late ProfileOpsBloc _profileOpsBloc;
 
   @override
   void initState() {
     super.initState();
     _profileBloc = getIt<ProfileBloc>();
+    _profileOpsBloc = getIt<ProfileOpsBloc>();
     _profileBloc.add(const ProfileEvent.loadProfile());
   }
 
@@ -49,8 +52,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _profileBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => _profileBloc),
+        BlocProvider(create: (context) => _profileOpsBloc),
+      ],
       child: Scaffold(
         appBar: CustomAppBar(title: context.l10n.profile),
         body: Padding(
@@ -76,43 +82,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
               return state.when(
                 initial: () => const ProfileLoadingWidget(),
                 loading: () => const ProfileLoadingWidget(),
-                loaded: (profile) => ProfileContentWidget(
-                  profile: profile,
-                  usernameController: _usernameController,
-                  usernameFocus: _usernameFocus,
-                  formKey: _formKey,
-                  onPickImage: _pickImage,
-                  onUpdateProfile: _updateProfile,
-                  isLoading: false,
-                ),
-                updating: () => ProfileContentWidget(
-                  profile: Profile.mockProfile(),
-                  usernameController: _usernameController,
-                  usernameFocus: _usernameFocus,
-                  formKey: _formKey,
-                  onPickImage: _pickImage,
-                  onUpdateProfile: _updateProfile,
-                  isLoading: true,
-                ),
-                updated: (profile) => ProfileContentWidget(
-                  profile: profile,
-                  usernameController: _usernameController,
-                  usernameFocus: _usernameFocus,
-                  formKey: _formKey,
-                  onPickImage: _pickImage,
-                  onUpdateProfile: _updateProfile,
-                  isLoading: false,
-                ),
-                imageSelected: (profile, selectedImagePath) =>
-                    ProfileContentWidget(
-                      profile: profile,
+                loaded: (profile) =>
+                    BlocBuilder<ProfileOpsBloc, ProfileOpsState>(
+                      builder: (context, opsState) {
+                        return ProfileContentWidget(
+                          profile: profile,
+                          usernameController: _usernameController,
+                          usernameFocus: _usernameFocus,
+                          formKey: _formKey,
+                          onPickImage: _pickImage,
+                          onUpdateProfile: _updateProfile,
+                          isLoading: false,
+                          selectedImagePath: opsState.whenOrNull(
+                            imageSelected: (_, selectedImagePath) =>
+                                selectedImagePath,
+                          ),
+                        );
+                      },
+                    ),
+                updating: () => BlocBuilder<ProfileOpsBloc, ProfileOpsState>(
+                  builder: (context, opsState) {
+                    return ProfileContentWidget(
+                      profile: Profile.mockProfile(),
                       usernameController: _usernameController,
                       usernameFocus: _usernameFocus,
                       formKey: _formKey,
                       onPickImage: _pickImage,
                       onUpdateProfile: _updateProfile,
-                      isLoading: false,
-                      selectedImagePath: selectedImagePath,
+                      isLoading: true,
+                      selectedImagePath: opsState.whenOrNull(
+                        imageSelected: (_, selectedImagePath) =>
+                            selectedImagePath,
+                      ),
+                    );
+                  },
+                ),
+                updated: (profile) =>
+                    BlocBuilder<ProfileOpsBloc, ProfileOpsState>(
+                      builder: (context, opsState) {
+                        return ProfileContentWidget(
+                          profile: profile,
+                          usernameController: _usernameController,
+                          usernameFocus: _usernameFocus,
+                          formKey: _formKey,
+                          onPickImage: _pickImage,
+                          onUpdateProfile: _updateProfile,
+                          isLoading: false,
+                          selectedImagePath: opsState.whenOrNull(
+                            imageSelected: (_, selectedImagePath) =>
+                                selectedImagePath,
+                          ),
+                        );
+                      },
                     ),
                 error: (message) => ProfileErrorWidget(
                   message: message,
@@ -161,7 +182,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
 
       if (image != null) {
-        _profileBloc.add(ProfileEvent.selectImage(imagePath: image.path));
+        // Get current profile from ProfileBloc state
+        _profileBloc.state.whenOrNull(
+          loaded: (profile) {
+            _profileOpsBloc.add(
+              ProfileOpsEvent.selectImage(
+                profile: profile,
+                imagePath: image.path,
+              ),
+            );
+          },
+          updated: (profile) {
+            _profileOpsBloc.add(
+              ProfileOpsEvent.selectImage(
+                profile: profile,
+                imagePath: image.path,
+              ),
+            );
+          },
+        );
 
         if (mounted) {
           context.showSnackBar(context.l10n.imageSelected);

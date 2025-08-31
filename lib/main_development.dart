@@ -8,15 +8,17 @@ import 'package:travel_app/src/travel_app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await configureDependencies();
 
-
-  Bloc.observer = const AppBlocObserver();
-
+  // Initialize Supabase first
   await Supabase.initialize(
     url: AppConstants.baseUrl,
     anonKey: AppConstants.supabaseKey,
   );
+
+  // Then configure dependencies (which depend on Supabase being initialized)
+  await configureDependencies();
+
+  Bloc.observer = const AppBlocObserver();
 
   await bootstrap(() => const TravelApp());
 }

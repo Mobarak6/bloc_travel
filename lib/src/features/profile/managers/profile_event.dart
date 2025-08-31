@@ -8,9 +8,4 @@ abstract class ProfileEvent with _$ProfileEvent {
     required String username,
     String? avatarUrl,
   }) = _UpdateProfile;
-
-  const factory ProfileEvent.selectImage({
-    required String imagePath,
-  }) = _SelectImage;
-
 }
