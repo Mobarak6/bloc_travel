@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:travel_app/src/data/models/user_info_model.dart';
+
 
 part 'profile_model.freezed.dart';
 part 'profile_model.g.dart';
@@ -30,3 +30,22 @@ abstract class Profile with _$Profile {
     email: "developer.mobarak@gmail.com",
   );
 }
+
+enum UserRole {
+  user('User'),
+  admin('Admin');
+
+  const UserRole(this.label);
+
+  final String label;
+
+  static UserRole fromString(String value) {
+    return UserRole.values.firstWhere(
+          (type) => type.name == value.toLowerCase(),
+      orElse: () => UserRole.user,
+    );
+  }
+
+  String toJson() => name;
+}
+

@@ -30,7 +30,6 @@ class ProfileService {
     required String username,
     String? avatarUrl,
   }) async {
-    print('-------here00000');
     final user = _supabase.auth.currentUser;
     if (user == null) {
       throw Exception('User not authenticated');
@@ -66,16 +65,14 @@ class ProfileService {
     final fileName =
         '${currentUser.id}/avatar${DateTime.now().millisecondsSinceEpoch}$fileExt';
 
-
-    final storageResponse = await _supabase.storage
+    await _supabase.storage
         .from('avatars')
         .upload(
-          fileName,
-          imageFile,
-          fileOptions: const FileOptions(upsert: true),
-        );
+      fileName,
+      imageFile,
+      fileOptions: const FileOptions(upsert: true),
+    );
 
-    log("storageResponse $storageResponse");
 
     final imageUrl = _supabase.storage.from('avatars').getPublicUrl(fileName);
 

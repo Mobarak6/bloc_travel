@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_app/app_di.dart';
 import 'package:travel_app/l10n/l10n.dart';
-import 'package:travel_app/src/data/models/user_info_model.dart';
+import 'package:travel_app/src/data/models/profile_model.dart';
+
 import 'package:travel_app/src/features/auth/managers/auth_bloc.dart';
 import 'package:travel_app/src/features/auth/widgets/user_type_dropdown_widget.dart';
 import 'package:travel_app/src/shared/extensions/overlay_extensions.dart';

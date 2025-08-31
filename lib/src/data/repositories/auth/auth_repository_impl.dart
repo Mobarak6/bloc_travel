@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:travel_app/src/data/models/user_info_model.dart';
+import 'package:travel_app/src/data/models/profile_model.dart';
 import 'package:travel_app/src/data/repositories/auth/auth_repository.dart';
 import 'package:travel_app/src/data/services/auth_service.dart';
 import 'package:travel_app/src/shared/utils/result.dart';

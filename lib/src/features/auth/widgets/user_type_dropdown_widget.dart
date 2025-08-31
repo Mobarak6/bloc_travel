@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/l10n/l10n.dart';
-import 'package:travel_app/src/data/models/user_info_model.dart';
+import 'package:travel_app/src/data/models/profile_model.dart';
+
 import 'package:travel_app/src/shared/utils/dimensions.dart';
 import 'package:travel_app/src/shared/utils/styles.dart';
 
