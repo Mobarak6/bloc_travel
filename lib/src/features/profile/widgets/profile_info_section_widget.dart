@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/l10n/l10n.dart';
 import 'package:travel_app/src/data/models/profile_model.dart';
+import 'package:travel_app/src/shared/utils/date_converter.dart';
 import 'package:travel_app/src/shared/utils/dimensions.dart';
 import 'package:travel_app/src/shared/utils/styles.dart';
+import 'package:travel_app/src/shared/utils/validate_check.dart';
 import 'package:travel_app/src/shared/widgets/custom_text_field_widget.dart';
 
 class ProfileInfoSectionWidget extends StatelessWidget {
@@ -39,16 +41,15 @@ class ProfileInfoSectionWidget extends StatelessWidget {
           focusNode: usernameFocus,
           inputType: TextInputType.text,
           prefixIcon: Icons.person,
-          validator: (value) {
-            if (value?.trim().isEmpty ?? true) {
-              return context.l10n.pleaseEnterUsername;
-            }
-            return null;
-          },
+          validator: (value) => ValidateCheck.validateEmptyText(
+            context,
+            value?.trim(),
+            context.l10n.pleaseEnterUsername,
+          ),
         ),
         const SizedBox(height: Dimensions.spacingLarge),
 
-        // Email Field (Read-only)
+        // Email Field (Read-only - Disabled)
         CustomTextFieldWidget(
           labelText: context.l10n.email,
           hintText: profile.email ?? '',
@@ -56,10 +57,11 @@ class ProfileInfoSectionWidget extends StatelessWidget {
           focusNode: FocusNode()..unfocus(),
           inputType: TextInputType.emailAddress,
           prefixIcon: Icons.email,
+          enabled: false,
         ),
         const SizedBox(height: Dimensions.spacingLarge),
 
-        // Role Field (Read-only)
+        // Role Field (Read-only - Disabled)
         CustomTextFieldWidget(
           labelText: context.l10n.role,
           hintText: profile.role?.name.toUpperCase() ?? '',
@@ -69,21 +71,24 @@ class ProfileInfoSectionWidget extends StatelessWidget {
           focusNode: FocusNode()..unfocus(),
           inputType: TextInputType.text,
           prefixIcon: Icons.admin_panel_settings,
+          enabled: false,
         ),
         const SizedBox(height: Dimensions.spacingLarge),
 
-        // Created At Field (Read-only)
+        // Created At Field (Read-only - Disabled)
         CustomTextFieldWidget(
           labelText: context.l10n.createdAt,
-          hintText: profile.createdAt?.toString() ?? '',
+          hintText: DateConverter.isoToFormattedString(profile.createdAt ?? ''),
           controller: TextEditingController(
-            text: profile.createdAt?.toString() ?? '',
+            text: DateConverter.isoToFormattedString(profile.createdAt ?? ''),
           ),
           focusNode: FocusNode()..unfocus(),
           inputType: TextInputType.text,
           prefixIcon: Icons.calendar_today,
+          enabled: false,
         ),
       ],
     );
   }
+
 }
