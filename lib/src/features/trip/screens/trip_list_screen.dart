@@ -6,6 +6,8 @@ import 'package:travel_app/l10n/l10n.dart';
 import 'package:travel_app/src/data/models/trip/trip_model.dart';
 import 'package:travel_app/src/features/trip/managers/trip_bloc.dart';
 import 'package:travel_app/src/features/trip/screens/create_trip_screen.dart';
+import 'package:travel_app/src/features/trip/widgets/trip_card_widget.dart';
+import 'package:travel_app/src/shared/utils/dimensions.dart';
 import 'package:travel_app/src/travel_ap_router.gr.dart';
 
 @RoutePage()
@@ -52,7 +54,7 @@ class _TripListScreenState extends State<TripListScreen> {
             loading: () => const Center(child: CircularProgressIndicator()),
             loaded: (trips) => trips.isNotEmpty ? ListView.builder(
               itemCount: trips.length,
-              itemBuilder: (context, index) => _TripTile(trip: trips[index]),
+              itemBuilder: (context, index) => TripCardWidget(trip: trips[index]),
             ) : Text(context.l10n.no_trips_found),
             error: (msg) => Center(child: Text('Error: $msg')),
           );
@@ -63,18 +65,5 @@ class _TripListScreenState extends State<TripListScreen> {
   }
 }
 
-class _TripTile extends StatelessWidget {
-  const _TripTile({required this.trip, super.key});
-  final Trip trip;
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(8),
-      child: ListTile(
-        title: Text(trip.destination ?? ''),
-        subtitle: Text('${trip.startDate?.toLocal()} - ${trip.endDate?.toLocal()}'),
-      ),
-    );
-  }
-}
+
