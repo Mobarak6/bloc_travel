@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_app/app_di.dart';
+import 'package:travel_app/l10n/l10n.dart';
 import 'package:travel_app/src/data/models/trip/trip_model.dart';
 import 'package:travel_app/src/features/trip/managers/trip_bloc.dart';
 import 'package:travel_app/src/features/trip/screens/create_trip_screen.dart';
@@ -36,7 +37,7 @@ class _TripListScreenState extends State<TripListScreen> {
     return BlocProvider(
   create: (context) => _tripBloc,
   child: Scaffold(
-      appBar: AppBar(title: const Text('Trips')),
+      appBar: AppBar(title: Text(context.l10n.trips)),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.pushRoute(CreateTripRoute(userId: widget.userId));
@@ -47,12 +48,12 @@ class _TripListScreenState extends State<TripListScreen> {
         bloc: _tripBloc,
         builder: (context, state) {
           return state.when(
-            initial: () => const Center(child: Text('Initializing...')),
+            initial: () => const Center(child: CircularProgressIndicator()),
             loading: () => const Center(child: CircularProgressIndicator()),
-            loaded: (trips) => ListView.builder(
+            loaded: (trips) => trips.isNotEmpty ? ListView.builder(
               itemCount: trips.length,
-              itemBuilder: (context, index) => TripTile(trip: trips[index]),
-            ),
+              itemBuilder: (context, index) => _TripTile(trip: trips[index]),
+            ) : Text(context.l10n.no_trips_found),
             error: (msg) => Center(child: Text('Error: $msg')),
           );
         },
@@ -62,8 +63,8 @@ class _TripListScreenState extends State<TripListScreen> {
   }
 }
 
-class TripTile extends StatelessWidget {
-  const TripTile({required this.trip, super.key});
+class _TripTile extends StatelessWidget {
+  const _TripTile({required this.trip, super.key});
   final Trip trip;
 
   @override

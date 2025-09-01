@@ -20,12 +20,15 @@ import 'src/data/repositories/auth/auth_repository_impl.dart' as _i472;
 import 'src/data/repositories/profile/profile_repository.dart' as _i341;
 import 'src/data/repositories/profile/profile_repository_impl.dart' as _i828;
 import 'src/data/repositories/trip/trip_repository.dart' as _i198;
+import 'src/data/repositories/trip/trip_repository_impl.dart' as _i230;
 import 'src/data/services/auth_service.dart' as _i123;
 import 'src/data/services/profile_service.dart' as _i11;
+import 'src/data/services/trip_service.dart' as _i934;
 import 'src/features/auth/managers/auth_bloc.dart' as _i548;
 import 'src/features/profile/managers/profile_bloc.dart' as _i500;
 import 'src/features/profile/managers/profile_ops_bloc.dart' as _i656;
 import 'src/features/trip/managers/trip_bloc.dart' as _i1063;
+import 'src/features/trip/managers/trip_ops_bloc.dart' as _i665;
 
 // initializes the registration of main-scope dependencies inside of GetIt
 Future<_i174.GetIt> $initGetIt(
@@ -44,14 +47,12 @@ Future<_i174.GetIt> $initGetIt(
   );
   gh.lazySingleton<_i123.AuthService>(() => _i123.AuthService());
   gh.lazySingleton<_i11.ProfileService>(() => _i11.ProfileService());
+  gh.lazySingleton<_i934.TripService>(() => _i934.TripService());
   gh.lazySingleton<_i341.ProfileRepository>(
     () => _i828.ProfileRepositoryImpl(gh<_i11.ProfileService>()),
   );
   gh.lazySingleton<_i313.AuthRepository>(
     () => _i472.AuthRepositoryImpl(gh<_i123.AuthService>()),
-  );
-  gh.lazySingleton<_i198.TripRepository>(
-    () => _i198.TripRepository(gh<_i454.SupabaseClient>()),
   );
   gh.factory<_i500.ProfileBloc>(
     () => _i500.ProfileBloc(gh<_i341.ProfileRepository>()),
@@ -59,10 +60,16 @@ Future<_i174.GetIt> $initGetIt(
   gh.factory<_i656.ProfileOpsBloc>(
     () => _i656.ProfileOpsBloc(gh<_i341.ProfileRepository>()),
   );
+  gh.lazySingleton<_i198.TripRepository>(
+    () => _i230.TripRepositoryImpl(gh<_i934.TripService>()),
+  );
+  gh.factory<_i548.AuthBloc>(() => _i548.AuthBloc(gh<_i313.AuthRepository>()));
   gh.factory<_i1063.TripBloc>(
     () => _i1063.TripBloc(gh<_i198.TripRepository>()),
   );
-  gh.factory<_i548.AuthBloc>(() => _i548.AuthBloc(gh<_i313.AuthRepository>()));
+  gh.factory<_i665.TripOpsBloc>(
+    () => _i665.TripOpsBloc(gh<_i198.TripRepository>()),
+  );
   return getIt;
 }
 

@@ -2,12 +2,19 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_app/app_di.dart';
+import 'package:travel_app/l10n/l10n.dart';
 import 'package:travel_app/src/data/models/trip/trip_model.dart';
-import 'package:travel_app/src/features/trip/managers/trip_bloc.dart';
+import 'package:travel_app/src/features/trip/managers/trip_ops_bloc.dart';
+import 'package:travel_app/src/shared/utils/dimensions.dart';
+import 'package:travel_app/src/shared/utils/validate_check.dart';
+import 'package:travel_app/src/shared/widgets/custom_button.dart';
+import 'package:travel_app/src/shared/widgets/custom_text_field_widget.dart';
+import 'package:travel_app/src/travel_ap_router.gr.dart';
 
 @RoutePage()
 class CreateTripScreen extends StatefulWidget {
   const CreateTripScreen({required this.userId, super.key});
+
   final String userId;
 
   @override
@@ -15,17 +22,20 @@ class CreateTripScreen extends StatefulWidget {
 }
 
 class _CreateTripScreenState extends State<CreateTripScreen> {
-  late TripBloc _tripBloc;
+  late TripOpsBloc _tripOpsBloc;
   final _formKey = GlobalKey<FormState>();
   final _destinationController = TextEditingController();
   final _descriptionController = TextEditingController();
+
+  final FocusNode _destinationFocus = FocusNode();
+  final FocusNode _descriptionFocus = FocusNode();
+
   DateTime? _startDate;
   DateTime? _endDate;
 
   @override
   void initState() {
-
-    _tripBloc = getIt<TripBloc>();
+    _tripOpsBloc = getIt<TripOpsBloc>();
 
     super.initState();
   }
@@ -34,39 +44,61 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => _tripBloc,
+      create: (context) => _tripOpsBloc,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Create Trip')),
+        appBar: AppBar(title: Text(context.l10n.create_trip)),
         body: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(Dimensions.spacingDefault),
           child: Form(
             key: _formKey,
             child: ListView(
               children: [
-                TextFormField(
+                CustomTextFieldWidget(
+                  labelText: context.l10n.destination,
+                  hintText: context.l10n.enter_destination,
                   controller: _destinationController,
-                  decoration: const InputDecoration(labelText: 'Destination'),
-                  validator: (v) => v!.isEmpty ? 'Enter destination' : null,
+                  focusNode: _destinationFocus,
+                  inputType: TextInputType.text,
+                  prefixIcon: Icons.map,
+                  validator: (value) => ValidateCheck.validateEmptyText(
+                    context,
+                    value?.trim(),
+                    context.l10n.enter_destination,
+                  ),
                 ),
-                TextFormField(
+                const SizedBox(height: Dimensions.spacingDefault),
+
+                CustomTextFieldWidget(
+                  labelText: context.l10n.description,
+                  hintText: context.l10n.enter_description,
                   controller: _descriptionController,
-                  decoration: const InputDecoration(labelText: 'Description'),
+                  focusNode: _descriptionFocus,
+                  inputType: TextInputType.text,
+                  prefixIcon: Icons.description,
+                  validator: (value) => ValidateCheck.validateEmptyText(
+                    context,
+                    value?.trim(),
+                    context.l10n.enter_description,
+                  ),
                 ),
+
                 ListTile(
-                  title: Text(_startDate == null ? 'Start Date' : _startDate!.toLocal().toString().split(' ')[0]),
+                  title: Text(_startDate == null ? 'Start Date' : _startDate!
+                      .toLocal().toString().split(' ')[0]),
                   trailing: const Icon(Icons.calendar_today),
                   onTap: () async {
                     final date = await showDatePicker(
                       context: context,
                       initialDate: DateTime.now(),
-                      firstDate: DateTime(2020),
+                      firstDate: DateTime.now(),
                       lastDate: DateTime(2100),
                     );
                     if (date != null) setState(() => _startDate = date);
                   },
                 ),
                 ListTile(
-                  title: Text(_endDate == null ? 'End Date' : _endDate!.toLocal().toString().split(' ')[0]),
+                  title: Text(_endDate == null ? 'End Date' : _endDate!
+                      .toLocal().toString().split(' ')[0]),
                   trailing: const Icon(Icons.calendar_today),
                   onTap: () async {
                     final date = await showDatePicker(
@@ -78,22 +110,35 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                     if (date != null) setState(() => _endDate = date);
                   },
                 ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate() && _startDate != null && _endDate != null) {
-                      final trip = Trip(
-                        id: '', // Supabase will generate
-                        userId: widget.userId,
-                        destination: _destinationController.text,
-                        startDate: _startDate,
-                        endDate: _endDate,
-                        description: _descriptionController.text,
-                      );
-                     _tripBloc.add(TripEvent.createTrip(trip));
-                    }
+                const SizedBox(height: 100),
+
+                BlocBuilder<TripOpsBloc, TripOpsState>(
+                  bloc: _tripOpsBloc,
+                  builder: (context, state) {
+                    final isLoading = state.whenOrNull(inProgress: ()=> true)
+                        ?? false;
+                    
+                    return CustomButton(
+                      buttonText: context.l10n.create_trip,
+                      isLoading: isLoading,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate() && _startDate !=
+                            null && _endDate != null) {
+                          final trip = Trip(
+                            userId: widget.userId,
+                            destination: _destinationController.text,
+                            startDate: _startDate,
+                            endDate: _endDate,
+                            description: _descriptionController.text,
+                          );
+                          _tripOpsBloc.add(TripOpsEvent.createTrip(trip));
+                          context.replaceRoute(TripListRoute(userId: widget.userId));
+
+                        }
+                      },
+
+                    );
                   },
-                  child: const Text('Create Trip'),
                 ),
               ],
             ),

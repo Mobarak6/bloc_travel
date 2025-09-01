@@ -56,5 +56,16 @@
     "manageYourProfileInformation": "Manage your profile information",
     "personalInformation": "Personal Information",
     "tapToChangePhoto": "Tap to change photo",
-    "memberSince": "Member Since"
+    "memberSince": "Member Since",
+    "loading": "Loading...",
+    "create_trip" : "Create Trip",
+    "destination" : "Destination",
+    "enter_destination" : "Enter destination",
+    "start_date" : "Start Date",
+    "end_date" : "End Date",
+    "description" : "Description",
+    "enter_description" : "Enter description",
+    "no_trips_found" : "No trips found",
+    "trips" : "Trips"
+
 }

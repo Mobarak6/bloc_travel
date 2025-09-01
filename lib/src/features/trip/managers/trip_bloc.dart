@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:travel_app/src/data/models/response.dart';
 import 'package:travel_app/src/data/models/trip/trip_model.dart';
 import 'package:travel_app/src/data/repositories/trip/trip_repository.dart';
 
@@ -13,40 +14,33 @@ part 'trip_bloc.freezed.dart';
 @injectable
 class TripBloc extends Bloc<TripEvent, TripState> {
   TripBloc(this.repository) : super(const TripState.initial()) {
-    on<TripEvent>((event, emit) {
-
-    });
-
     on<LoadTrips>(_onLoadTrips);
-    on<CreateTrip>(_onCreateTrip);
+    on<_TripsUpdated>(_onTripsUpdated);
   }
 
   final TripRepository repository;
-  StreamSubscription? _subscription;
+  StreamSubscription<Response<List<Trip>>>? _subscription;
 
-  void _onLoadTrips(LoadTrips event, Emitter<TripState> emit) {
-    emit(const TripLoading());
-    _subscription?.cancel();
-    _subscription = repository.getTrips(
-      userId: event.userId,
-      isAdmin: event.isAdmin ?? false,
-    ).listen((trips) {
-      emit(TripLoaded(trips));
-
-      // add(TripEvent.createTripList(trips));
-    });
-    // emit(TripLoaded(trips));
-
+  void _onTripsUpdated(_TripsUpdated event, Emitter<TripState> emit) {
+    emit(TripState.loaded(event.trips));
   }
 
-  void _onCreateTrip(CreateTrip event, Emitter<TripState> emit) async {
-    try {
-      await repository.createTrip(event.trip);
-    } catch (e) {
-      print('=============erro---${e.toString()}');
-      emit(TripState.error(e.toString()));
-    }
+  Future<void> _onLoadTrips(LoadTrips event, Emitter<TripState> emit) async {
+    emit(const TripState.loading());
+
+    _subscription = repository.getTrips(userId: event.userId, isAdmin: event.isAdmin ?? false)
+        .listen(
+          (response) {
+        switch (response) {
+          case Success<List<Trip>>(:final value):
+            add(TripEvent.tripsUpdated(value));
+          case Error<List<Trip>>(:final error):
+            emit(TripState.error(error.toString()));
+        }
+      },
+    );
   }
+
 
   @override
   Future<void> close() {
