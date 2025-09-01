@@ -28,7 +28,7 @@ class TripBloc extends Bloc<TripEvent, TripState> {
   Future<void> _onLoadTrips(LoadTrips event, Emitter<TripState> emit) async {
     emit(const TripState.loading());
 
-    _subscription = repository.getTrips(userId: event.userId, isAdmin: event.isAdmin ?? false)
+    _subscription = repository.getTrips(userId: event.userId)
         .listen(
           (response) {
         switch (response) {

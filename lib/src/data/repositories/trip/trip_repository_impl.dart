@@ -10,9 +10,9 @@ class TripRepositoryImpl implements TripRepository {
   final TripService _tripService;
 
   @override
-  Stream<Response<List<Trip>>> getTrips({required String userId, bool isAdmin = false}) {
+  Stream<Response<List<Trip>>> getTrips({required String userId}) {
     try {
-      return _tripService.getTrips(userId: userId, isAdmin: isAdmin).map((data) {
+      return _tripService.getTrips(userId: userId).map((data) {
         final trips = data.map(Trip.fromJson).toList();
         return Response.success(trips);
       });
