@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel_app/src/data/models/profile_model.dart';
 import 'package:travel_app/src/data/repositories/profile/profile_repository.dart';
-import 'package:travel_app/src/shared/utils/result.dart';
+import 'package:travel_app/src/data/models/response.dart';
 
 part 'profile_ops_event.dart';
 part 'profile_ops_state.dart';
@@ -41,7 +41,7 @@ class ProfileOpsBloc extends Bloc<ProfileOpsEvent, ProfileOpsState> {
     );
 
     switch (result) {
-      case Ok<Profile>():
+      case Success<Profile>():
         emit(ProfileOpsState.updated(result.value));
 
       case Error<Profile>():

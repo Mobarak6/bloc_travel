@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:travel_app/src/data/models/profile_model.dart';
 import 'package:travel_app/src/data/repositories/auth/auth_repository.dart';
 import 'package:travel_app/src/data/services/auth_service.dart';
-import 'package:travel_app/src/shared/utils/result.dart';
+import 'package:travel_app/src/data/models/response.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
@@ -10,7 +10,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthService _authService;
 
   @override
-  Future<Result<bool>> signIn({
+  Future<Response<bool>> signIn({
     required String email,
     required String password,
   }) async {
@@ -20,14 +20,14 @@ class AuthRepositoryImpl implements AuthRepository {
         password: password,
       );
 
-      return Result.ok(response.user != null);
+      return Response.success(response.user != null);
     } on Exception catch (e) {
-      return Result.error(e);
+      return Response.error(e);
     }
   }
 
   @override
-  Future<Result<bool>> signUp({
+  Future<Response<bool>> signUp({
     required String email,
     required String password,
     required String name,
@@ -41,14 +41,14 @@ class AuthRepositoryImpl implements AuthRepository {
         userRole: userRole,
       );
 
-      return Result.ok(true);
+      return Response.success(true);
     } on Exception catch (e) {
-      return Result.error(e);
+      return Response.error(e);
     }
   }
 
   @override
-  Future<Result<bool>> signOut() {
+  Future<Response<bool>> signOut() {
     // TODO: implement signOut
     throw UnimplementedError();
   }

@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:travel_app/src/data/models/profile_model.dart';
 
 import 'package:travel_app/src/data/repositories/auth/auth_repository.dart';
-import 'package:travel_app/src/shared/utils/result.dart';
+import 'package:travel_app/src/data/models/response.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -21,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       switch (result) {
-        case Ok<bool>():
+        case Success<bool>():
           emit(const AuthState.success());
 
         case Error<bool>():
@@ -38,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         userRole: event.userRole,
       );
       switch (result) {
-        case Ok<bool>():
+        case Success<bool>():
           emit(const AuthState.success());
 
         case Error<bool>():

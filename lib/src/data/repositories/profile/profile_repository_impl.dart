@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:travel_app/src/data/models/profile_model.dart';
 import 'package:travel_app/src/data/repositories/profile/profile_repository.dart';
 import 'package:travel_app/src/data/services/profile_service.dart';
-import 'package:travel_app/src/shared/utils/result.dart';
+import 'package:travel_app/src/data/models/response.dart';
 
 @LazySingleton(as: ProfileRepository)
 class ProfileRepositoryImpl implements ProfileRepository {
@@ -11,18 +11,18 @@ class ProfileRepositoryImpl implements ProfileRepository {
   final ProfileService _profileService;
 
   @override
-  Future<Result<Profile>> getProfile() async {
+  Future<Response<Profile>> getProfile() async {
     try {
       final response = await _profileService.getProfile();
       final profile = Profile.fromJson(response);
-      return Result.ok(profile);
+      return Response.success(profile);
     } on Exception catch (e) {
-      return Result.error(e);
+      return Response.error(e);
     }
   }
 
   @override
-  Future<Result<Profile>> updateProfile({
+  Future<Response<Profile>> updateProfile({
     required String username,
     String? avatarUrl,
   }) async {
@@ -44,10 +44,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
 
       final profile = Profile.fromJson(response);
-      return Result.ok(profile);
+      return Response.success(profile);
 
     } on Exception catch (e) {
-      return Result.error(e);
+      return Response.error(e);
     }
   }
 
