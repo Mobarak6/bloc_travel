@@ -66,6 +66,9 @@
     "description" : "Description",
     "enter_description" : "Enter description",
     "no_trips_found" : "No trips found",
-    "trips" : "Trips"
+    "trips" : "Trips",
+    "please_select_start_date" : "Please select start date",
+    "please_select_end_date" : "Please select end date"
+
 
 }

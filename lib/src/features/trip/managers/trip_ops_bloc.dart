@@ -14,6 +14,9 @@ part 'trip_ops_bloc.freezed.dart';
 class TripOpsBloc extends Bloc<TripOpsEvent, TripOpsState> {
   TripOpsBloc(this.repository) : super(const TripOpsState.initial()) {
     on<_CreateTrip>(_onCreateTrip);
+    on<_SelectDate>(_onSelectDate);
+
+
 
   }
 
@@ -36,5 +39,12 @@ class TripOpsBloc extends Bloc<TripOpsEvent, TripOpsState> {
 
 
   }
+
+  Future<void> _onSelectDate(_SelectDate event, Emitter<TripOpsState> emit) async {
+    emit(TripOpsState.selectedDate(start: event.start, end: event.end));
+  }
+
+
+
 
 }
